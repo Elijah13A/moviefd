@@ -289,7 +289,6 @@ const addDataToHTMLMovie = (series, keenSlider) => {
 fetchMovies("https://dramoir.com/main/home/?format=json");
 
 
-
 const fetchPhone = async (apiUrl) => {
     try {
         const response = await fetch(apiUrl);
@@ -298,12 +297,12 @@ const fetchPhone = async (apiUrl) => {
         const data = await response.json();
         console.log(data);
 
-        // ارسال داده‌ها به تابع `addDataToHTML` بر اساس نوع سریال
-        if (data.choosen_korean_movie) {
-            addDataToHTMLPhone(data.choosen_korean_movie, document.getElementById("keen-slider5"));
-        }
         if (data.choosen_movie) {
-            addDataToHTMLPhone(data.choosen_movie, document.getElementById("keen-slider6"));
+            addDataToHTMLPhone(data.choosen_movie, document.getElementById("keen-slider5"));
+        }
+
+        if (data.choosen_korean_movie) {
+            addDataToHTMLPhone(data.choosen_korean_movie, document.getElementById("keen-slider6"));
         }
 
     } catch (error) {
@@ -317,43 +316,35 @@ const addDataToHTMLPhone = (series, keenSlider) => {
 
     keenSlider.innerHTML = ""; // پاک کردن محتوا قبل از اضافه کردن داده جدید
 
-    series.forEach((serie) => {
+    for (let i = 0; i < series.length / 2; i++) {
+        const topSerie = series[i]; // سریال بالایی
+        const bottomSerie = series[i + Math.floor(series.length / 2)]; // سریال پایینی
+
         const slideItem = document.createElement("div");
         slideItem.classList.add("keen-slider__slide");
 
         slideItem.innerHTML = `
-            <div class="col-md-3 movie-hover" id="first-half" style="    display: flex;
-            align-items: center;
-            justify-content: center;">
-                            <a href="download/imdex.html?id=${serie.id}">
-                                <img src="https://dramoir.com/${serie.image}">
-  <div class="shiny-circle">
-        <div class="sharp-triangle"></div>
-    </div>
-    
-                           
-                            </a>
-                        </div>
-                        <div class="col-md-3 movie-hover" id="first-half"   display: flex;
-            align-items: center;
-            justify-content: center;">
-                            <a href="download/imdex.html?id=${serie.id}">
-                                <img src="https://dramoir.com/${serie.image}">
-                             
-   <div class="shiny-circle">
-        <div class="sharp-triangle"></div>
-    </div>
-                            </a>
-                        </div>
+            <div class="col-md-3 movie-hover" id="first-half" style="display: flex; align-items: center; justify-content: center;">
+                <a href="download/imdex.html?id=${topSerie.id}">
+                    <img src="https://dramoir.com/${topSerie.image}">
+                    <div class="shiny-circle">
+                        <div class="sharp-triangle"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 movie-hover" id="second-half" style="display: flex; align-items: center; justify-content: center;">
+                <a href="download/imdex.html?id=${bottomSerie.id}">
+                    <img src="https://dramoir.com/${bottomSerie.image}">
+                    <div class="shiny-circle">
+                        <div class="sharp-triangle"></div>
+                    </div>
+                </a>
+            </div>
         `;
 
         keenSlider.appendChild(slideItem);
-
-    });
+    }
 };
 
-// اجرای تابع `fetchSeries`
+// اجرای تابع `fetchPhone`
 fetchPhone("https://dramoir.com/main/home/?format=json");
-
-
-

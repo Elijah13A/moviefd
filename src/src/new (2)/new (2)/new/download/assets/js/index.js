@@ -166,31 +166,39 @@ themeSwitch.addEventListener("click", () => {
 
 
 //api
-let movieVideo=document.getElementById("myVideo");
-let movieDescription= document.getElementById("movie-description")
+let movieVideo = document.getElementById("myVideo");
+let movieDescription = document.getElementById("movie-description");
+let Movies = []; // تعریف متغیر سراسری برای ذخیره فیلم‌ها
 
-const fetchProducts=async ()=>{
+const fetchProducts = async () => {
     try {
-        const response = await fetch("https://dramoir.com/main/search/?q=x");
+        const response = await fetch("https://dramoir.com/main/home/?format=json");
         if (!response.ok) throw new Error("Network Error");
+
         Movies = await response.json();
-        displayMovies();
+        displayMovies(); // نمایش فیلم‌ها پس از دریافت داده
+    } catch (error) {
+        console.error("Error fetching movies", error);
     }
- catch (error){
-    console.error("Error fetching movies" , error);
- }
 };
 
-
-const displayMovies=()=>{
+const displayMovies = () => {
     let movieId = new URLSearchParams(window.location.search).get("id");
-    let movie = Movies.find(m=>m.id==movieId);
- if (movie){
-    movieVideo.src= movie.image;
-    movieDescription.textContent=movie.description;
- }
 
+    if (!movieId) {
+        console.error("Movie ID not found in URL");
+        return;
+    }
 
+    let movie = Movies.find(m => m.id == movieId);
+
+    if (!movie) {
+        console.error("Movie not found");
+        return;
+    }
+
+    movieVideo.src = movie.video_url || movie.image; // اولویت با لینک ویدیو
+    movieDescription.textContent = movie.description;
 };
 
 fetchProducts();
