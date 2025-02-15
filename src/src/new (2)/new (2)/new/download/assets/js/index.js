@@ -214,7 +214,6 @@ const displayMovies = () => {
         movieGenres.textContent = movie.genres.map(genre => genre.name).join(" ، ");
         movieRealease.textContent = movie.release_year;
         movieRank.textContent = movie.rate;
-
     }
 
 };

@@ -87,3 +87,56 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+//api
+
+
+
+const fetchSeries = async (apiUrl) => {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Network response was not ok");
+
+        const data = await response.json();
+        console.log(data);
+
+        // ارسال داده‌ها به تابع `addDataToHTML` بر اساس نوع سریال
+        if (data.best_korean_series) {
+            addDataToHTML(data.best_korean_series, document.getElementById("keen-slider"));
+        }
+        if (data.best_chineas_series) {
+            addDataToHTML(data.best_chineas_series, document.getElementById("keen-slider2"));
+        }
+        if (data.best_series) {
+            addDataToHTML(data.best_series, document.getElementById("keen-slider3"));
+        }
+        if (data.choosen_korean_series) {
+            addDataToHTML(data.choosen_korean_series, document.getElementById("keen-slider4"));
+        }
+    } catch (error) {
+        console.error("Error fetching series:", error);
+    }
+};
+
+// تابع برای اضافه کردن داده‌ها به HTML
+const addDataToHTML = (series, keenSlider) => {
+    if (!keenSlider) return; // اگر المنت وجود نداشت، خروج
+
+    keenSlider.innerHTML = ""; // پاک کردن محتوا قبل از اضافه کردن داده جدید
+
+    series.forEach((serie) => {
+        const slideItem = document.createElement("div");
+        slideItem.classList.add("keen-slider__slide");
+
+        slideItem.innerHTML = `
+  
+        `;
+
+        keenSlider.appendChild(slideItem);
+    });
+};
+
+// اجرای تابع `fetchSeries`
+fetchSeries("https://dramoir.com/main/home/?format=json");
