@@ -359,30 +359,29 @@ const fetchMore = async (apiUrl) => {
         const data = await response.json();
         console.log(data);
         if (data.best_korean_series) {
-            addDataToHTMLMore(data.best_korean_series, document.getElementById("headerSec1"), "جدیدترین سریال های کره ای");
+            addDataToHTMLMore(data.best_korean_series, document.getElementById("headerSec1"), "جدیدترین سریال های کره ای", "best_korean_series");
         }
         if (data.best_chineas_series) {
-            addDataToHTMLMore(data.best_chineas_series, document.getElementById("headerSec2"), "جدیدترین سریال های چینی");
+            addDataToHTMLMore(data.best_chineas_series, document.getElementById("headerSec2"), "جدیدترین سریال های چینی", "best_chineas_series");
         }
         if (data.best_series) {
-            addDataToHTMLMore(data.best_series, document.getElementById("headerSec3"), "بهترین سریال ها");
+            addDataToHTMLMore(data.best_series, document.getElementById("headerSec3"), "بهترین سریال ها", "best_series");
         }
         if (data.choosen_korean_series) {
-            addDataToHTMLMore(data.choosen_korean_series, document.getElementById("headerSec4"), "سریال های منتخب کره ای");
+            addDataToHTMLMore(data.choosen_korean_series, document.getElementById("headerSec4"), "سریال های منتخب کره ای", "choosen_korean_series");
         }
         if (data.choosen_movie) {
-            addDataToHTMLMore(data.choosen_movie, document.getElementById("headerSec5"), "فیلم های منتخب");
+            addDataToHTMLMore(data.choosen_movie, document.getElementById("headerSec5"), "فیلم های منتخب", "choosen_movie");
         }
         if (data.choosen_korean_movie) {
-            addDataToHTMLMore(data.choosen_korean_movie, document.getElementById("headerSec6"), "فیلم های منتخب کره ای");
+            addDataToHTMLMore(data.choosen_korean_movie, document.getElementById("headerSec6"), "فیلم های منتخب کره ای", "choosen_korean_movie");
         }
 
     } catch (error) {
         console.error("Error fetching series:", error);
     }
 };
-
-const addDataToHTMLMore = (series, keenSlider, title) => {
+const addDataToHTMLMore = (series, keenSlider, title, type) => {
     console.log(series);
     if (!keenSlider) return; // اگر المنت وجود نداشت، خروج
 
@@ -395,11 +394,10 @@ const addDataToHTMLMore = (series, keenSlider, title) => {
 
     slideItem.innerHTML = `
         <h4 class="spanb-sm dark-mc" style="font-weight:bolder; margin-right: -30px;">${title}</h4>
-        <a href="more/index.html?series=${seriesIds}"><span class="all" style="font-weight: bolder;">مشاهده همه</span></a>
+        <a href="more/index.html?type=${type}&series=${seriesIds}"><span class="all" style="font-weight: bolder;">مشاهده همه</span></a>
     `;
 
     keenSlider.appendChild(slideItem);
 };
-
 // اجرای تابع `fetchMore`
 fetchMore("https://dramoir.com/main/home/?format=json");

@@ -91,52 +91,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 //api
-
-
-
-const fetchSeries = async (apiUrl) => {
+const fetchSeriesDetails = async (type, seriesIds) => {
     try {
+        const apiUrl = `https://dramoir.com/main/home/?format=json`;
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("Network response was not ok");
+
+        if (!response.ok) {
+            throw new Error(`Network response was not ok (${response.status})`);
+        }
 
         const data = await response.json();
-        console.log(data);
+        const seriesData = data[type]; // انتخاب داده‌ها بر اساس نوع دسته‌بندی
 
-        // ارسال داده‌ها به تابع `addDataToHTML` بر اساس نوع سریال
-        if (data.best_korean_series) {
-            addDataToHTML(data.best_korean_series, document.getElementById("keen-slider"));
-        }
-        if (data.best_chineas_series) {
-            addDataToHTML(data.best_chineas_series, document.getElementById("keen-slider2"));
-        }
-        if (data.best_series) {
-            addDataToHTML(data.best_series, document.getElementById("keen-slider3"));
-        }
-        if (data.choosen_korean_series) {
-            addDataToHTML(data.choosen_korean_series, document.getElementById("keen-slider4"));
+        if (seriesData) {
+            displaySeries(seriesData);
         }
     } catch (error) {
-        console.error("Error fetching series:", error);
+        console.error("Error fetching series details:", error);
+      
     }
 };
 
-// تابع برای اضافه کردن داده‌ها به HTML
-const addDataToHTML = (series, keenSlider) => {
-    if (!keenSlider) return; // اگر المنت وجود نداشت، خروج
+const displaySeries = (series) => {
+    const seriesContainer = document.getElementById("seriesContainer");
+    const pageTitle = document.getElementById("pageTitle");
 
-    keenSlider.innerHTML = ""; // پاک کردن محتوا قبل از اضافه کردن داده جدید
+    // پاک کردن محتوای قبلی
+    seriesContainer.innerHTML = "";
 
-    series.forEach((serie) => {
-        const slideItem = document.createElement("div");
-        slideItem.classList.add("keen-slider__slide");
+    if (series && series.length > 0) {
+        pageTitle.textContent = "سریال‌های منتخب"; // عنوان صفحه
 
-        slideItem.innerHTML = `
-  
-        `;
+        // ایجاد کارت‌ها برای هر سریال
+        series.forEach(item => {
+            const seriesItem = document.createElement("div");
+            seriesItem.className = "col-md-2 col-4 movie-hover";
 
-        keenSlider.appendChild(slideItem);
-    });
+            seriesItem.innerHTML = `
+                <a href="#">
+                    <img src="https://dramoir.com/${item.image}">
+                  
+                    <button>دانلود</button>
+                </a>
+            `;
+
+            seriesContainer.appendChild(seriesItem);
+        });
+    } 
 };
 
-// اجرای تابع `fetchSeries`
-fetchSeries("https://dramoir.com/main/home/?format=json");
+// دریافت پارامترهای URL
+const urlParams = new URLSearchParams(window.location.search);
+const type = urlParams.get('type'); // دریافت نوع دسته‌بندی
+const seriesIds = urlParams.get('series'); // دریافت شناسه‌ها
+
+if (type && seriesIds) {
+    fetchSeriesDetails(type, seriesIds);
+} else {
+    document.getElementById("seriesContainer").innerHTML = "<p>هیچ سریالی انتخاب نشده است.</p>";
+}
