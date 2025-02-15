@@ -1,8 +1,8 @@
-const searchBar = document.querySelector(".search-bar-container");  
-const magnifier = document.querySelector(".magnifier"); 
+const searchBar = document.querySelector(".search-bar-container");
+const magnifier = document.querySelector(".magnifier");
 
-magnifier.addEventListener("click", ()=>{ 
-    searchBar.classList.toggle("active"); 
+magnifier.addEventListener("click", () => {
+    searchBar.classList.toggle("active");
 });
 
 
@@ -31,7 +31,7 @@ function prevSlide() {
 }
 
 
-document.getElementById('download-button').addEventListener('click', function() {
+document.getElementById('download-button').addEventListener('click', function () {
     const myDiv = document.getElementById('parts');
     if (myDiv.style.display === 'none') {
         myDiv.style.display = 'block';
@@ -40,103 +40,103 @@ document.getElementById('download-button').addEventListener('click', function() 
     }
 });
 
-document.getElementById("quality1").addEventListener("click",function(){
-    const quality1=document.getElementById("open-quality1");
-    if(quality1.style.display==="none"){
-        quality1.style.display="block";
+document.getElementById("quality1").addEventListener("click", function () {
+    const quality1 = document.getElementById("open-quality1");
+    if (quality1.style.display === "none") {
+        quality1.style.display = "block";
     }
-    else{
-        quality1.style.display="none"
-    }
-})
-
-document.getElementById("quality2").addEventListener("click",function(){
-    const quality2=document.getElementById("open-quality2");
-    if(quality2.style.display==="none"){
-        quality2.style.display="block";
-    }
-    else{
-        quality2.style.display="none"
+    else {
+        quality1.style.display = "none"
     }
 })
 
-document.getElementById("quality3").addEventListener("click",function(){
-    const quality3=document.getElementById("open-quality3");
-    if(quality3.style.display==="none"){
-        quality3.style.display="block";
+document.getElementById("quality2").addEventListener("click", function () {
+    const quality2 = document.getElementById("open-quality2");
+    if (quality2.style.display === "none") {
+        quality2.style.display = "block";
     }
-    else{
-        quality3.style.display="none"
-    }
-})
-
-document.getElementById("quality4").addEventListener("click",function(){
-    const quality4=document.getElementById("open-quality4");
-    if(quality4.style.display==="none"){
-        quality4.style.display="block";
-    }
-    else{
-        quality4.style.display="none"
+    else {
+        quality2.style.display = "none"
     }
 })
 
-document.getElementById("quality5").addEventListener("click",function(){
-    const quality5=document.getElementById("open-quality5");
-    if(quality5.style.display==="none"){
-        quality5.style.display="block";
+document.getElementById("quality3").addEventListener("click", function () {
+    const quality3 = document.getElementById("open-quality3");
+    if (quality3.style.display === "none") {
+        quality3.style.display = "block";
     }
-    else{
-        quality5.style.display="none"
-    }
-})
-
-document.getElementById("quality6").addEventListener("click",function(){
-    const quality6=document.getElementById("open-quality6");
-    if(quality6.style.display==="none"){
-        quality6.style.display="block";
-    }
-    else{
-        quality6.style.display="none"
+    else {
+        quality3.style.display = "none"
     }
 })
 
-document.getElementById("quality7").addEventListener("click",function(){
-    const quality7=document.getElementById("open-quality7");
-    if(quality7.style.display==="none"){
-        quality7.style.display="block";
+document.getElementById("quality4").addEventListener("click", function () {
+    const quality4 = document.getElementById("open-quality4");
+    if (quality4.style.display === "none") {
+        quality4.style.display = "block";
     }
-    else{
-        quality7.style.display="none"
-    }
-})
-
-document.getElementById("quality8").addEventListener("click",function(){
-    const quality8=document.getElementById("open-quality8");
-    if(quality8.style.display==="none"){
-        quality8.style.display="block";
-    }
-    else{
-        quality8.style.display="none"
+    else {
+        quality4.style.display = "none"
     }
 })
 
-document.getElementById("quality9").addEventListener("click",function(){
-    const quality9=document.getElementById("open-quality9");
-    if(quality9.style.display==="none"){
-        quality9.style.display="block";
+document.getElementById("quality5").addEventListener("click", function () {
+    const quality5 = document.getElementById("open-quality5");
+    if (quality5.style.display === "none") {
+        quality5.style.display = "block";
     }
-    else{
-        quality9.style.display="none"
+    else {
+        quality5.style.display = "none"
     }
 })
 
-document.getElementById("quality10").addEventListener("click",function(){
-    const quality10=document.getElementById("open-quality10");
-    if(quality10.style.display==="none"){
-        quality10.style.display="block";
+document.getElementById("quality6").addEventListener("click", function () {
+    const quality6 = document.getElementById("open-quality6");
+    if (quality6.style.display === "none") {
+        quality6.style.display = "block";
     }
-    else{
-        quality10.style.display="none"
+    else {
+        quality6.style.display = "none"
+    }
+})
+
+document.getElementById("quality7").addEventListener("click", function () {
+    const quality7 = document.getElementById("open-quality7");
+    if (quality7.style.display === "none") {
+        quality7.style.display = "block";
+    }
+    else {
+        quality7.style.display = "none"
+    }
+})
+
+document.getElementById("quality8").addEventListener("click", function () {
+    const quality8 = document.getElementById("open-quality8");
+    if (quality8.style.display === "none") {
+        quality8.style.display = "block";
+    }
+    else {
+        quality8.style.display = "none"
+    }
+})
+
+document.getElementById("quality9").addEventListener("click", function () {
+    const quality9 = document.getElementById("open-quality9");
+    if (quality9.style.display === "none") {
+        quality9.style.display = "block";
+    }
+    else {
+        quality9.style.display = "none"
+    }
+})
+
+document.getElementById("quality10").addEventListener("click", function () {
+    const quality10 = document.getElementById("open-quality10");
+    if (quality10.style.display === "none") {
+        quality10.style.display = "block";
+    }
+    else {
+        quality10.style.display = "none"
     }
 })
 
@@ -146,20 +146,20 @@ let darkmode = localStorage.getItem('darkmode')
 const themeSwitch = document.getElementById('theme-switch')
 
 const enableDarkmode = () => {
-  document.body.classList.add('darkmode')
-  localStorage.setItem('darkmode', 'active')
+    document.body.classList.add('darkmode')
+    localStorage.setItem('darkmode', 'active')
 }
 
 const disableDarkmode = () => {
-  document.body.classList.remove('darkmode')
-  localStorage.setItem('darkmode', null)
+    document.body.classList.remove('darkmode')
+    localStorage.setItem('darkmode', null)
 }
 
-if(darkmode === "active") enableDarkmode()
+if (darkmode === "active") enableDarkmode()
 
 themeSwitch.addEventListener("click", () => {
-  darkmode = localStorage.getItem('darkmode')
-  darkmode !== "active" ? enableDarkmode() : disableDarkmode()
+    darkmode = localStorage.getItem('darkmode')
+    darkmode !== "active" ? enableDarkmode() : disableDarkmode()
 })
 
 
@@ -168,15 +168,26 @@ themeSwitch.addEventListener("click", () => {
 //api
 let movieVideo = document.getElementById("myVideo");
 let movieDescription = document.getElementById("movie-description");
-let Movies = []; // تعریف متغیر سراسری برای ذخیره فیلم‌ها
+let movieGenres = document.getElementById("genres");
+let movieRealease = document.getElementById("release_year");
+let movieRank = document.getElementById("rank");
+
+let Movies = []; // ذخیره تمام فیلم‌ها در این آرایه
 
 const fetchProducts = async () => {
     try {
         const response = await fetch("https://dramoir.com/main/home/?format=json");
         if (!response.ok) throw new Error("Network Error");
 
-        Movies = await response.json();
-        displayMovies(); // نمایش فیلم‌ها پس از دریافت داده
+        const data = await response.json();
+
+        // استخراج تمام فیلم‌ها از آبجکت داده‌ها و ادغام در یک آرایه واحد
+        Movies = Object.values(data)
+            .filter(Array.isArray) // فقط آرایه‌ها را انتخاب کن
+            .flat(); // همه آرایه‌ها را در یک لیست ترکیب کن
+
+
+        displayMovies();
     } catch (error) {
         console.error("Error fetching movies", error);
     }
@@ -197,17 +208,23 @@ const displayMovies = () => {
         return;
     }
 
-    movieVideo.src = movie.video_url || movie.image; // اولویت با لینک ویدیو
-    movieDescription.textContent = movie.description;
+    if (movie) {
+        movieVideo.src = movie.image;
+        movieDescription.textContent = movie.description;
+        movieGenres.textContent = movie.genres.map(genre => genre.name).join(" ، ");
+        movieRealease.textContent = movie.release_year;
+        movieRank.textContent = movie.rate;
+
+    }
+
 };
 
 fetchProducts();
 
 
-
 //search
 
-
+/*
 document.addEventListener("DOMContentLoaded", function () {
     const searchIcon = document.querySelector(".magnifier");
     const searchInput = document.querySelector(".input");
@@ -243,3 +260,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+*/
