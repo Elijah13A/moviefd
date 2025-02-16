@@ -176,7 +176,7 @@ let Movies = []; // ذخیره تمام فیلم‌ها در این آرایه
 
 const fetchProducts = async () => {
     try {
-        const response = await fetch("https://dramoir.com/main/home/?format=json");
+        const response = await fetch("https://dramoir.com/main/movie");
         if (!response.ok) throw new Error("Network Error");
 
         const data = await response.json();
@@ -195,6 +195,52 @@ const fetchProducts = async () => {
 
 const displayMovies = () => {
     let movieId = new URLSearchParams(window.location.search).get("id");
+    
+    if (!movieId) {
+        console.error("Movie ID not found in URL");
+        return;
+    }
+
+    let movie = Movies.find(m => m.id == movieId);
+
+
+
+    if (movie) {
+        movieVideo.src = movie.image;
+        movieDescription.textContent = movie.description;
+        movieGenres.textContent = movie.genres.map(genre => genre.name).join(" ، ");
+        movieRealease.textContent = movie.release_year;
+        movieRank.textContent = movie.rate;
+        console.log(movie.age_category);
+    }
+
+};
+
+fetchProducts();
+
+
+let series = []; // ذخیره تمام فیلم‌ها در این آرایه
+
+const fetchSeries = async () => {
+    try {
+        const response = await fetch("https://dramoir.com/main/series");
+        if (!response.ok) throw new Error("Network Error");
+
+        const data = await response.json();
+
+        Movies = Object.values(data)
+            .filter(Array.isArray) // فقط آرایه‌ها را انتخاب کن
+            .flat(); // همه آرایه‌ها را در یک لیست ترکیب کن
+
+
+        displaySeries();
+    } catch (error) {
+        console.error("Error fetching movies", error);
+    }
+};
+
+const displaySeries = () => {
+    let movieId = new URLSearchParams(window.location.search).get("id");
 
     if (!movieId) {
         console.error("Movie ID not found in URL");
@@ -203,10 +249,7 @@ const displayMovies = () => {
 
     let movie = Movies.find(m => m.id == movieId);
 
-    if (!movie) {
-        console.error("Movie not found");
-        return;
-    }
+
 
     if (movie) {
         movieVideo.src = movie.image;
@@ -214,11 +257,15 @@ const displayMovies = () => {
         movieGenres.textContent = movie.genres.map(genre => genre.name).join(" ، ");
         movieRealease.textContent = movie.release_year;
         movieRank.textContent = movie.rate;
+
     }
 
 };
 
-fetchProducts();
+fetchSeries();
+
+
+
 
 
 //search

@@ -128,7 +128,7 @@ const displaySeries = (series) => {
             seriesItem.className = "col-md-2 col-4 movie-hover";
 
             seriesItem.innerHTML = `
-                <a href="#">
+                <a href="../download/imdex.html?id=${item.id}">
                     <img src="https://dramoir.com/${item.image}">
                   
                     <button>دانلود</button>
