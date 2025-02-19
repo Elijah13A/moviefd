@@ -176,11 +176,8 @@ let Movies = []; // ذخیره تمام فیلم‌ها در این آرایه
 
 const fetchProducts = async () => {
     try {
-        const response = await fetch("https://dramoir.com/main/movie");
-        if (!response.ok) throw new Error("Network Error");
-
-        const data = await response.json();
-
+        fetch(apiUrlGenerator()).then(res => res.json()).then(data => addDataToHTMLMovie(data));
+        console.log(data);
         // استخراج تمام فیلم‌ها از آبجکت داده‌ها و ادغام در یک آرایه واحد
         Movies = Object.values(data)
             .filter(Array.isArray) // فقط آرایه‌ها را انتخاب کن
@@ -193,28 +190,22 @@ const fetchProducts = async () => {
     }
 };
 
-const displayMovies = () => {
-    let movieId = new URLSearchParams(window.location.search).get("id");
+function apiUrlGenerator() {
+    let idParam = new URLSearchParams(window.location.search).get("id");
+    return `https://dramoir.com/main/movie/${idParam}`
+}
+
+function addDataToHTMLMovie(data) {
+    movieVideo.setAttribute("src", data.trailer_link);
+    movieDescription.innerHTML = data.description;
+    movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ");
+    movieRealease.textContent = data.related_movies[0].release_year;
+    movieRank.textContent = data.rate;
+    console.log(data.related_movies.release_year);
+
     
-    if (!movieId) {
-        console.error("Movie ID not found in URL");
-        return;
-    }
 
-    let movie = Movies.find(m => m.id == movieId);
-
-
-
-    if (movie) {
-        movieVideo.src = movie.image;
-        movieDescription.textContent = movie.description;
-        movieGenres.textContent = movie.genres.map(genre => genre.name).join(" ، ");
-        movieRealease.textContent = movie.release_year;
-        movieRank.textContent = movie.rate;
-        console.log(movie.age_category);
-    }
-
-};
+}
 
 fetchProducts();
 
@@ -223,44 +214,33 @@ let series = []; // ذخیره تمام فیلم‌ها در این آرایه
 
 const fetchSeries = async () => {
     try {
-        const response = await fetch("https://dramoir.com/main/series");
-        if (!response.ok) throw new Error("Network Error");
-
-        const data = await response.json();
-
+        fetch(apiUrlGeneratorSeries()).then(res => res.json()).then(data => addDataToHTMLSeries(data));
+        console.log(data);
         Movies = Object.values(data)
             .filter(Array.isArray) // فقط آرایه‌ها را انتخاب کن
             .flat(); // همه آرایه‌ها را در یک لیست ترکیب کن
 
-
-        displaySeries();
     } catch (error) {
         console.error("Error fetching movies", error);
     }
 };
 
-const displaySeries = () => {
-    let movieId = new URLSearchParams(window.location.search).get("id");
+function apiUrlGeneratorSeries() {
+    let idParam = new URLSearchParams(window.location.search).get("id");
+    return `https://dramoir.com/main/series/${idParam}`
+}
 
-    if (!movieId) {
-        console.error("Movie ID not found in URL");
-        return;
-    }
+function addDataToHTMLSeries(data) {
+    //تریلر هر فصل فرق میکند اینجا باید اصلاح شود
+    movieVideo.setAttribute("src", data.seasons[0].trailer_link);
+    movieDescription.innerHTML = data.description;
+    movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ");
+    movieRealease.textContent = data.related_movies[0].release_year;
+    movieRank.textContent = data.rate;
+    console.log(data.related_movies.release_year);
+}
 
-    let movie = Movies.find(m => m.id == movieId);
 
-
-
-    if (movie) {
-        movieVideo.src = movie.image;
-        movieDescription.textContent = movie.description;
-        movieGenres.textContent = movie.genres.map(genre => genre.name).join(" ، ");
-        movieRealease.textContent = movie.release_year;
-        movieRank.textContent = movie.rate;
-
-    }
-
-};
 
 fetchSeries();
 
