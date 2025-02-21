@@ -93,10 +93,6 @@ body {
 
 }
 
-.myimpcolor{
-   color: var( --dd-text) !important;
-}
-
 #theme-switch{
    height: 50px;
    width: 50px;

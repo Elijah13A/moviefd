@@ -163,68 +163,110 @@ themeSwitch.addEventListener("click", () => {
 })
 
 
-
-
-//api
 let movieVideo = document.getElementById("myVideo");
 let movieDescription = document.getElementById("movie-description");
 let movieGenres = document.getElementById("genres");
 let movieRelease = document.getElementById("release_year");
 let movieRank = document.getElementById("rank");
-let Movies = [];
 
-const fetchProducts = async () => {
+const fetchSeries = async () => {
     try {
-        const response = await fetch(apiUrlGenerator());
+        const response = await fetch(apiUrlGeneratorSeries());
         const data = await response.json();
-
-        addDataToHTMLMovie(data, document.querySelector(".part-of-movie"));
-
+       
+        addDataToHTMLSeries(data, document.querySelector(".part-of-movie"));
     } catch (error) {
-        console.error("Error fetching movies", error);
+        console.error("Error fetching series", error);
     }
 };
 
-function apiUrlGenerator() {
+function apiUrlGeneratorSeries() {
     let idParam = new URLSearchParams(window.location.search).get("id");
-    return `https://dramoir.com/main/movie/${idParam}`;
+    return `https://dramoir.com/main/series/${idParam}`;
 }
 
-function addDataToHTMLMovie(data, parts) {
-    movieVideo.setAttribute("src", data.trailer_link);
-    movieDescription.innerHTML = data.description;
-    movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ");
-    movieRelease.textContent = data.related_movies[0].release_year;
-    movieRank.textContent = data.rate;
+function addDataToHTMLSeries(data, parts) {
+    if (!data || !data.seasons || !Array.isArray(data.seasons)) {
+        console.error("Invalid data structure: seasons is missing or not an array");
+        return;
+    }
+
+    movieVideo.setAttribute("src", data.trailer_link || "#");
+    movieDescription.innerHTML = data.description || "توضیحات موجود نیست";
+    movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ") || "ژانر نامشخص";
+    movieRelease.textContent = data.release_year || "سال انتشار نامشخص";
+    movieRank.textContent = data.rate || "امتیاز نامشخص";
 
     parts.innerHTML = ""; 
 
+    const seasonList = document.createElement("ul");
 
-
-    const ul = document.createElement("ul"); 
-
-    for (let i = 0; i < data.download_urls.length; i++) {
-        const li = document.createElement("li");
-        li.classList.add("col-12", "quality", "set-center");
-        li.id = `quality${i + 1}`;
-  
-        li.innerHTML = `
-           <a href="${data.download_urls[i].download_url}" class="myimpcolor">
-            ${data.download_urls[i].quality}
-                         
-            <i class="fa-solid fa-download dark-purple"></i>
-         
-         </a>  
+    data.seasons.forEach((season, index) => {
+       
+        const seasonItem = document.createElement("li");
+        seasonItem.classList.add("col-12", "quality", "set-center"); 
+        seasonItem.innerHTML = ` 
+            <i class="fa-solid fa-folder-open dark-purple"></i> فصل ${season.number}
         `;
-        ul.appendChild(li); 
+        seasonItem.style.cursor = "pointer";
+        seasonItem.style.marginBottom = "10px"; 
     
-    }
 
-    parts.appendChild(ul); 
+        const episodeList = document.createElement("div");
+        episodeList.style.display = "none";
 
+        seasonItem.addEventListener("click", (event) => {
+            event.stopPropagation();
+            episodeList.style.display = episodeList.style.display === "none" ? "block" : "none";
+        });
 
+        season.episodes.forEach(episode => {
+            const episodeItem = document.createElement("li");
+            episodeItem.classList.add("col-12", "quality", "set-center");
+            episodeItem.innerHTML = ` 
+                <i class="fa-solid fa-download dark-purple"></i> قسمت ${episode.number}
+            `;
+            episodeItem.style.cursor = "pointer";
 
+            const qualityList = document.createElement("ul");
+            qualityList.style.display = "none"; 
+            qualityList.style.paddingRight = "5px"; 
+
+         
+            episodeItem.addEventListener("click", (event) => {
+                event.stopPropagation();
+                qualityList.style.display = qualityList.style.display === "none" ? "block" : "none";
+            });
+
+            if (episode.download_urls && Array.isArray(episode.download_urls)) {
+                episode.download_urls.forEach(download => {
+                    const qualityItem = document.createElement("li");
+                    qualityItem.style.marginBottom = "20px";
+
+                    const link = document.createElement("a");
+                    link.setAttribute("href", download.download_url);
+                    link.className = "q-y";
+                    link.style.padding = "5px 25px";
+                    link.textContent = download.quality;
+
+                    qualityItem.appendChild(link);
+                    qualityList.appendChild(qualityItem);
+                });
+            }
+
+            episodeItem.appendChild(qualityList);
+            episodeList.appendChild(episodeItem);
+        });
+
+   
+        seasonList.appendChild(seasonItem);
+        seasonList.appendChild(episodeList);
+    });
+
+    parts.appendChild(seasonList);
 }
 
-fetchProducts();
+fetchSeries();
 
+
+console.log("سریال")

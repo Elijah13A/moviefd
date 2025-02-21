@@ -122,7 +122,7 @@ const displaySeries = (series) => {
     if (series && series.length > 0) {
         pageTitle.textContent = "سریال‌های منتخب"; // عنوان صفحه
 
-        // ایجاد کارت‌ها برای هر سریال
+        
         series.forEach(item => {
             const seriesItem = document.createElement("div");
             seriesItem.className = "col-md-2 col-4 movie-hover";

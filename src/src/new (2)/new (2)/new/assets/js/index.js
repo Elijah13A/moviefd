@@ -113,7 +113,7 @@ const addDataToHTML = (series, keenSlider) => {
                         </div>
                     </div>
                     <button class="watch-btn specialbutton">
-                        <a href="download/imdex.html?id=${serie.id}" class="f-info btn-a">تماشا و دانلود</a>
+                        <a href="downloadSerie/imdex.html?id=${serie.id}" class="f-info btn-a">تماشا و دانلود</a>
                     </button>
                 </div>
             </div>
