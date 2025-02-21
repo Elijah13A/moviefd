@@ -169,22 +169,17 @@ themeSwitch.addEventListener("click", () => {
 let movieVideo = document.getElementById("myVideo");
 let movieDescription = document.getElementById("movie-description");
 let movieGenres = document.getElementById("genres");
-let movieRealease = document.getElementById("release_year");
+let movieRelease = document.getElementById("release_year");
 let movieRank = document.getElementById("rank");
-
-let Movies = []; // ذخیره تمام فیلم‌ها در این آرایه
+let Movies = [];
 
 const fetchProducts = async () => {
     try {
-        fetch(apiUrlGenerator()).then(res => res.json()).then(data => addDataToHTMLMovie(data));
-        console.log(data);
-        // استخراج تمام فیلم‌ها از آبجکت داده‌ها و ادغام در یک آرایه واحد
-        Movies = Object.values(data)
-            .filter(Array.isArray) // فقط آرایه‌ها را انتخاب کن
-            .flat(); // همه آرایه‌ها را در یک لیست ترکیب کن
+        const response = await fetch(apiUrlGenerator());
+        const data = await response.json();
 
+        addDataToHTMLMovie(data, document.querySelector(".part-of-movie"));
 
-        displayMovies();
     } catch (error) {
         console.error("Error fetching movies", error);
     }
@@ -192,33 +187,79 @@ const fetchProducts = async () => {
 
 function apiUrlGenerator() {
     let idParam = new URLSearchParams(window.location.search).get("id");
-    return `https://dramoir.com/main/movie/${idParam}`
+    return `https://dramoir.com/main/movie/${idParam}`;
 }
 
-function addDataToHTMLMovie(data) {
+function addDataToHTMLMovie(data, parts) {
     movieVideo.setAttribute("src", data.trailer_link);
     movieDescription.innerHTML = data.description;
     movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ");
-    movieRealease.textContent = data.related_movies[0].release_year;
+    movieRelease.textContent = data.related_movies[0].release_year;
     movieRank.textContent = data.rate;
-    console.log(data.related_movies.release_year);
 
+    parts.innerHTML = ""; // پاک کردن لیست قبلی
+
+    const ul = document.createElement("ul"); // ایجاد یک لیست برای نمایش قسمت‌ها
+
+    for (let i = 0; i < data.download_urls.length; i++) {
+        const li = document.createElement("li");
+        li.classList.add("col-12", "quality", "set-center");
+        li.id = `quality${i + 1}`;
+  
+        li.innerHTML = `
+           <a href="${data.download_urls[i].download_url}">
+            ${data.download_urls[i].quality}
+                         
+            <i class="fa-solid fa-download dark-purple"></i>
+         
+         </a>  
+        `;
+        ul.appendChild(li); // اضافه کردن هر قسمت به لیست
+        console.log(ul);
+    }
+
+    parts.appendChild(ul); // اضافه کردن لیست به `parts`
+    console.log(parts);
+
+    /*
+        links.forEach((link, index) => {
+            let container = document.createElement("div");
+            console.log(link.download_urls);
+            // تولید داینامیک لیست کیفیت‌ها
+            let qualitiesHTML = (link.download_urls).map(quality => `
+                <li style="margin-bottom: 20px;">
+                    <a href="${quality.url}" class="q-y" style="padding: 5px 25px;" ${quality.url}>
+                        ${quality.quality}
+                    </a>
+                </li>
+            `).join('');
     
-
+            container.innerHTML = `
+                <li class="col-12 quality set-center" id="quality${index + 1}">
+                    <i class="fa-solid fa-download dark-purple"></i> قسمت ${index + 1}
+                    <ul id="open-quality${index + 1}">
+                        ${qualitiesHTML}
+                    </ul>
+                </li>
+            `;
+    
+            Array.from(parts).forEach(part => {
+                part.appendChild(container);
+            });
+        });
+    */
 }
 
 fetchProducts();
-
-
-let series = []; // ذخیره تمام فیلم‌ها در این آرایه
-
+/*
+let series = []; 
 const fetchSeries = async () => {
     try {
         fetch(apiUrlGeneratorSeries()).then(res => res.json()).then(data => addDataToHTMLSeries(data));
         console.log(data);
         Movies = Object.values(data)
-            .filter(Array.isArray) // فقط آرایه‌ها را انتخاب کن
-            .flat(); // همه آرایه‌ها را در یک لیست ترکیب کن
+            .filter(Array.isArray) 
+            .flat(); 
 
     } catch (error) {
         console.error("Error fetching movies", error);
@@ -231,7 +272,6 @@ function apiUrlGeneratorSeries() {
 }
 
 function addDataToHTMLSeries(data) {
-    //تریلر هر فصل فرق میکند اینجا باید اصلاح شود
     movieVideo.setAttribute("src", data.seasons[0].trailer_link);
     movieDescription.innerHTML = data.description;
     movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ");
@@ -240,50 +280,84 @@ function addDataToHTMLSeries(data) {
     console.log(data.related_movies.release_year);
 }
 
-
-
 fetchSeries();
 
 
+*/
 
 
+/**
+ * 
+ * function addDataToHTMLMovie(data, parts) {
+    movieVideo.setAttribute("src", data.trailer_link);
+    movieDescription.innerHTML = data.description;
+    movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ");
+    movieRelease.textContent = data.related_movies[0].release_year;
+    movieRank.textContent = data.rate;
 
-//search
+    parts.innerHTML = ""; // پاک کردن لیست قبلی
 
-/*
-document.addEventListener("DOMContentLoaded", function () {
-    const searchIcon = document.querySelector(".magnifier");
-    const searchInput = document.querySelector(".input");
+    const ul = document.createElement("ul"); // ایجاد یک لیست برای نمایش قسمت‌ها
 
-    async function fetchProducts() {
-        try {
-            const response = await fetch("https://fakestoreapi.com/products");
-            return await response.json();
-        } catch (error) {
-            console.error("Error fetching products:", error);
-            return [];
+    for (let i = 0; i < data.download_urls.length; i++) {
+        const li = document.createElement("li");
+        li.classList.add("col-12", "quality", "set-center");
+        li.id = `quality${i + 1}`;
+        const qua=document.getElementById(`open-quality${i+1}`);
+        for(let j=0;j<download_urls.length;j++){
+          
+            const liq=document.createElement("li");
+            liq.style.marginBottom="20px";
+            const linkQ=document.createElement("a");
+            linkQ.setAttribute.href=data.download_urls.download_url;
+            linkQ.innerHTML=data.download_urls.quality;
+            liq.appendChild(linkQ);
+            qua.appendChild(liq);
         }
+      ;
+
+        li.innerHTML = `
+            <i class="fa-solid fa-download dark-purple"></i> قسمت ${i + 1}
+                            
+            <ul id="open-quality${i + 1}">
+${qu}
+            </ul>
+        `;
+        ul.appendChild(li); // اضافه کردن هر قسمت به لیست
+        console.log(ul);
     }
 
-    searchIcon.addEventListener("click", async function () {
-        const query = searchInput.value.trim().toLowerCase();
-        if (!query) return;
+    parts.appendChild(ul); // اضافه کردن لیست به `parts`
+    console.log(parts);
 
-        const products = await fetchProducts();
-        const foundProduct = products.find(product => product.title.toLowerCase().includes(query));
+    /*
+        links.forEach((link, index) => {
+            let container = document.createElement("div");
+            console.log(link.download_urls);
+            // تولید داینامیک لیست کیفیت‌ها
+            let qualitiesHTML = (link.download_urls).map(quality => `
+                <li style="margin-bottom: 20px;">
+                    <a href="${quality.url}" class="q-y" style="padding: 5px 25px;" ${quality.url}>
+                        ${quality.quality}
+                    </a>
+                </li>
+            `).join('');
+    
+            container.innerHTML = `
+                <li class="col-12 quality set-center" id="quality${index + 1}">
+                    <i class="fa-solid fa-download dark-purple"></i> قسمت ${index + 1}
+                    <ul id="open-quality${index + 1}">
+                        ${qualitiesHTML}
+                    </ul>
+                </li>
+            `;
+    
+            Array.from(parts).forEach(part => {
+                part.appendChild(container);
+            });
+        });
+    
+}
 
-        if (foundProduct) {
-            window.location.href = `imdex.html?id=${foundProduct.id}`;
-            document.querySelector('.input').value = '';
-        } else {
-            const searchMessage1 = document.getElementById('search-message1');
-            searchMessage1.textContent = 'فیلمی با این عنوان پیدا نشد!'; 
-            // بعد از یک ثانیه متن را پاک کن
-            setTimeout(() => {
-                searchMessage1.textContent = "";
-            }, 2000);
-            document.querySelector('.input').value = '';
-        }
-    });
-});
-*/
+ 
+ */

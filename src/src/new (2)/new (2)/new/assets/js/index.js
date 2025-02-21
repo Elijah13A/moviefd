@@ -62,11 +62,11 @@ const fetchSeries = async (apiUrl) => {
         if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
-        console.log(data);
 
         // ارسال داده‌ها به تابع `addDataToHTML` بر اساس نوع سریال
         if (data.best_korean_series) {
             addDataToHTML(data.best_korean_series, document.getElementById("keen-slider"));
+            
         }
         if (data.best_chineas_series) {
             addDataToHTML(data.best_chineas_series, document.getElementById("keen-slider2"));
@@ -139,8 +139,6 @@ document.querySelector('.search-btn').addEventListener('click', async function (
     try {
         const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(searchValue)}`);
         const data = await response.json();
-
-        console.log('Received data:', data); // بررسی مقدار دریافتی
 
         // ترکیب تمام لیست‌های داخل شیء `data` در یک آرایه واحد
         const allMovies = Object.values(data).flat();
@@ -229,7 +227,7 @@ const fetchMovies = async (apiUrl) => {
         if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
-        console.log(data);
+       
 
         // ارسال داده‌ها به تابع `addDataToHTML` بر اساس نوع سریال
         if (data.choosen_korean_movie) {
@@ -247,7 +245,7 @@ const fetchMovies = async (apiUrl) => {
 // تابع برای اضافه کردن داده‌ها به HTML
 const addDataToHTMLMovie = (series, keenSlider) => {
     if (!keenSlider) return; // اگر المنت وجود نداشت، خروج
-
+console.log(keenSlider);
     keenSlider.innerHTML = ""; // پاک کردن محتوا قبل از اضافه کردن داده جدید
 
     let container = document.createElement("div");
@@ -382,7 +380,7 @@ const fetchMore = async (apiUrl) => {
     }
 };
 const addDataToHTMLMore = (series, keenSlider, title, type) => {
-    console.log(series);
+   
     if (!keenSlider) return; // اگر المنت وجود نداشت، خروج
 
     keenSlider.innerHTML = ""; // پاک کردن محتوا قبل از اضافه کردن داده جدید
