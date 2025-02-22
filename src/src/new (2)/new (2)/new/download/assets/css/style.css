@@ -12,7 +12,9 @@
    --text-background: rgb(246,215,210);
    --even-q:#ebfafe;
    --odd-q:#9775df75;
+   --image-invert:invert(0);
    --q-y:#d2f2ff;
+   --drop-down:rgb(246,215,210);
 }
 
 .darkmode{
@@ -26,6 +28,8 @@
    --even-q:#273142;
    --odd-q:#273142;
    --q-y:rgb(255,150,0);
+   --image-invert:invert(100%);
+   --drop-down:#273142;
 }
 * {
    padding: 0;
@@ -92,7 +96,91 @@ body {
    filter: var(--set-filter);
 
 }
-
+.invert-color{
+   filter: var(--image-invert) !important;
+   }
+   .dropdown {
+      position: relative;
+      display: inline-block;
+   }
+   .dropbtn {
+      background-color:transparent ;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+   }
+   .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--drop-down);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+   }
+   .dropdown-content a {
+      color: var(--dd-text);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+   }
+   .dropdown-content a:hover {
+      background-color: var();
+   }
+   .dropdown:hover .dropdown-content {
+      display: block;
+   }
+   
+   .dot2{
+      position: absolute;
+      right: 10px;
+      top: 12px;
+   }
+   
+   
+   ul.menu {
+      list-style: none;
+      padding: 0;
+   }
+   li.menu-item {
+      cursor: pointer;
+      padding: 10px;
+      width: 150px;
+      text-align: center;
+      margin-bottom: 5px;
+      background: none;
+      color: inherit;
+   }
+   ul.submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+      padding: 0;
+      margin: 0;
+   }
+   li.submenu-item {
+      padding: 8px;
+      text-align: center;
+   }
+   li.submenu-item a {
+      text-decoration: none;
+      color: inherit;
+   }
+   
+   nav .sidebar li:hover {
+      background-color: transparent !important;
+   
+   }
+   nav .sidebar li{
+      color: var(--dd-text) !important;
+      text-align:right !important;
+   }
+   .dot3{
+      position: absolute;
+      top: 0;
+      right: 0;
+   }
 .myimpcolor{
    color: var( --dd-text) !important;
 }
@@ -319,7 +407,7 @@ body {
    justify-content: space-between;
    align-items: center;
    align-content: center;
-   width: 80%;
+   width: 60%;
 }
 
 .nav-options li {

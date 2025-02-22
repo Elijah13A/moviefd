@@ -10,6 +10,7 @@
    --header-color:#e2574e;
 --set-filter: invert(100%);
 --drop-down:rgb(246,215,210);
+--image-invert:invert(0);
 }
 
 .darkmode{
@@ -19,6 +20,7 @@
    --header-color:#a60a2b;
    --set-filter: invert(100%);
    --drop-down:#273142;
+   --image-invert:invert(100%);
 }
 
 @font-face {
@@ -51,7 +53,9 @@ body {
    cursor: pointer;
 }
 
-
+.invert-color{
+filter: var(--image-invert) !important;
+}
 .dropdown {
    position: relative;
    display: inline-block;
@@ -384,7 +388,7 @@ body {
    justify-content: space-between;
    align-items: center;
    align-content: center;
-   width: 70%;
+   width: 60%;
 }
 
 .nav-options li {

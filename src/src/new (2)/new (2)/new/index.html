@@ -23,7 +23,7 @@
 <body>
 
     <div class="set-inset">
-        <nav style="box-shadow:1px 1px 10px #571c27;" class="light-mc header-color">
+        <nav style="box-shadow: 1px 1px 10px #571c27;" class="light-mc header-color">
             <div class=" d-md-none d-block">
                 <input type="checkbox" name="" id="inputTag">
                 <div class="move">
@@ -35,60 +35,86 @@
                     <span class="bottom light-mb"></span>
 
                 </label>
-                <div class="search-bar-container active ">
+                <div class="search-bar-container  active ">
                     <img src="assets/images/search (2).png" class="magnifier set-filter" />
-
                     <input type="text" class="input" placeholder="جستجو کنید ..." />
 
                 </div>
                 <span id="search-message1"></span>
                 <ul class="sidebar back-side"
                     style="z-index: 20;background-color: rgb(252,237,237);box-shadow:1px 1px 10px #fd7970;padding:60px 10px 0 0 ;text-align: start;">
+                   
+    <ul class="menu">
+        <li>
+            <div class="menu-item dark-mc" onclick="toggleSubmenu(this)"><i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>  
 
-                    <a href="#sec1" class="dark-mc">
-                        <p> •سریال کره ای</p>
-                    </a>
+                سریال</div>
+            <ul class="submenu">
+                <li class="submenu-item"><a href="#">سریال کره‌ای</a></li>
+                <li class="submenu-item"><a href="#">سریال چینی</a></li>
+                <li class="submenu-item"><a href="#">سریال خارجی</a></li>
+                <li class="submenu-item"><a href="#">سریال ترکی</a></li>
+            </ul>
+        </li>
+    </ul>
 
-                    <a href="#sec2" class="dark-mc">
-                        <p> •سریال چینی</p>
-                    </a>
+    <ul class="menu">
+        <li>
+            <div class="menu-item dark-mc" onclick="toggleSubmenu(this)"><i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i> 
+                فیلم</div>
+            <ul class="submenu">
+                <li class="submenu-item"><a href="#">فیلم کره‌ای</a></li>
+                <li class="submenu-item"><a href="#">فیلم خارجی</a></li>
+            </ul>
+        </li>
+    </ul>
 
-                    <a href="#sec3" class="dark-mc">
-                        <p> •سریال خارجی</p>
-                    </a>
+    <ul class="menu">
+        <li>
+            <div class="menu-item dark-mc"><img src="phone.png" width="16px" class="invert-color">
+                ارتباط با ما</div>
+        </li>
+    </ul>
 
-                    <a href="#sec4" class="dark-mc">
-                        <p>• فیلم کره ای</p>
-                    </a>
+    <ul class="menu">
+        <li>
+            
+            <div class="menu-item dark-mc"><img src="home.png" width="20px" class="invert-color">
+                 خانه</div>
+        </li>
+    </ul>
 
-                    <a href="#sec5" class="dark-mc">
-                        <p>• فیلم خارجی</p>
-                    </a>
+                    
                 </ul>
-
             </div>
             <div style="padding: 15px 130px;">
                 <ul class="nav-options d-md-flex d-none">
-                    <a href="#sec1" style="color: #f8f4f3;">
-                        <li class="po-re nav-mg cursor-p"><span class="dot">•</span> سریال کره ای
+                    <div class="dropdown">
+                        <button class="dropbtn"> <span class="dot2" style="top: 5px;">•</span> سریال </button>
+                        <div class="dropdown-content">
+                            <a href="#">سریال کره ای</a>
+                            <a href="#">سریال چینی</a>
+                            <a href="#">سریال خارجی</a>
+                            <a href="#">سریال ترکی</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn" > <span class="dot2" style="top: 5px;">•</span> فیلم </button>
+                        <div class="dropdown-content">
+                            <a href="#">فیلم کره ای</a>
+                            <a href="#">فیلم خارجی</a>
+                            
+                        </div>
+                    </div>
+                    <a href="#" style="color: #f8f4f3;">
+                        <li class="nav-mg cursor-p"><span class="dot" >•</span> ارتباط با ما
                         </li>
                     </a>
-                    <a href="#sec2" style="color: #f8f4f3;">
-                        <li class="nav-mg cursor-p"><span class="dot">•</span> سریال چینی
+                    <a href="#" style="color: #f8f4f3;">
+                        <li class="nav-mg cursor-p"><span class="dot">•</span> خانه 
                         </li>
                     </a>
-                    <a href="#sec3" style="color: #f8f4f3;">
-                        <li class="nav-mg cursor-p"><span class="dot">•</span>سریال خارجی
-                        </li>
-                    </a>
-                    <a href="#sec4" style="color: #f8f4f3;">
-                        <li class="nav-mg cursor-p"><span class="dot">•</span>فیلم کره ای
-                        </li>
-                    </a>
-                    <a href="#sec5" style="color: #f8f4f3;">
-                        <li class="nav-mg cursor-p "> <span class="dot">•</span>فیلم خارجی
-                        </li>
-                    </a>
+                 
                 </ul>
                 <button id="theme-switch" class="mode-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">

@@ -113,3 +113,12 @@ themeSwitch.addEventListener("click", () => {
     darkmode !== "active" ? enableDarkmode() : disableDarkmode()
 })
 
+function toggleSubmenu(element) {
+    let parentLi = element.parentElement; // پیدا کردن والد <li>
+    let submenu = parentLi.querySelector(".submenu"); // زیرمنو داخل همان <li>
+    if (submenu) {
+        submenu.style.maxHeight = submenu.style.maxHeight === "0px" || submenu.style.maxHeight === "" 
+            ? submenu.scrollHeight + "px" 
+            : "0px";
+    }
+}
