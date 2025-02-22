@@ -39,107 +39,58 @@ document.getElementById('download-button').addEventListener('click', function ()
         myDiv.style.display = 'none';
     }
 });
+document.querySelectorAll("[id^='quality']").forEach((element) => {
+    element.addEventListener("click", function () {
+        const target = document.getElementById(`open-${this.id}`);
+        target.style.display = target.style.display === "none" ? "block" : "none";
+    });
+});
 
-document.getElementById("quality1").addEventListener("click", function () {
-    const quality1 = document.getElementById("open-quality1");
-    if (quality1.style.display === "none") {
-        quality1.style.display = "block";
-    }
-    else {
-        quality1.style.display = "none"
-    }
-})
+// API
+const movieVideo = document.getElementById("myVideo");
+const movieDescription = document.getElementById("movie-description");
+const movieGenres = document.getElementById("genres");
+const movieRelease = document.getElementById("release_year");
+const movieRank = document.getElementById("rank");
 
-document.getElementById("quality2").addEventListener("click", function () {
-    const quality2 = document.getElementById("open-quality2");
-    if (quality2.style.display === "none") {
-        quality2.style.display = "block";
+const fetchProducts = async () => {
+    try {
+        const idParam = new URLSearchParams(window.location.search).get("id");
+        const response = await fetch(`https://dramoir.com/main/movie/${idParam}`);
+        const data = await response.json();
+        addDataToHTMLMovie(data, document.querySelector(".part-of-movie"));
+    } catch (error) {
+        console.error("Error fetching movies", error);
     }
-    else {
-        quality2.style.display = "none"
-    }
-})
+};
 
-document.getElementById("quality3").addEventListener("click", function () {
-    const quality3 = document.getElementById("open-quality3");
-    if (quality3.style.display === "none") {
-        quality3.style.display = "block";
-    }
-    else {
-        quality3.style.display = "none"
-    }
-})
+const addDataToHTMLMovie = (data, parts) => {
+    movieVideo.src = data.trailer_link;
+    movieDescription.textContent = data.description;
+    movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ");
+    movieRelease.textContent = data.related_movies[0].release_year;
+    movieRank.textContent = data.rate;
 
-document.getElementById("quality4").addEventListener("click", function () {
-    const quality4 = document.getElementById("open-quality4");
-    if (quality4.style.display === "none") {
-        quality4.style.display = "block";
-    }
-    else {
-        quality4.style.display = "none"
-    }
-})
+    parts.innerHTML = "";
+    const ul = document.createElement("ul");
 
-document.getElementById("quality5").addEventListener("click", function () {
-    const quality5 = document.getElementById("open-quality5");
-    if (quality5.style.display === "none") {
-        quality5.style.display = "block";
-    }
-    else {
-        quality5.style.display = "none"
-    }
-})
+    data.download_urls.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.className = "col-12 quality set-center";
+        li.id = `quality${index + 1}`;
+        li.innerHTML = `
+            <a href="${item.download_url}" class="myimpcolor">
+                ${item.quality}
+                <i class="fa-solid fa-download dark-purple"></i>
+            </a>
+        `;
+        ul.appendChild(li);
+    });
 
-document.getElementById("quality6").addEventListener("click", function () {
-    const quality6 = document.getElementById("open-quality6");
-    if (quality6.style.display === "none") {
-        quality6.style.display = "block";
-    }
-    else {
-        quality6.style.display = "none"
-    }
-})
+    parts.appendChild(ul);
+};
 
-document.getElementById("quality7").addEventListener("click", function () {
-    const quality7 = document.getElementById("open-quality7");
-    if (quality7.style.display === "none") {
-        quality7.style.display = "block";
-    }
-    else {
-        quality7.style.display = "none"
-    }
-})
-
-document.getElementById("quality8").addEventListener("click", function () {
-    const quality8 = document.getElementById("open-quality8");
-    if (quality8.style.display === "none") {
-        quality8.style.display = "block";
-    }
-    else {
-        quality8.style.display = "none"
-    }
-})
-
-document.getElementById("quality9").addEventListener("click", function () {
-    const quality9 = document.getElementById("open-quality9");
-    if (quality9.style.display === "none") {
-        quality9.style.display = "block";
-    }
-    else {
-        quality9.style.display = "none"
-    }
-})
-
-document.getElementById("quality10").addEventListener("click", function () {
-    const quality10 = document.getElementById("open-quality10");
-    if (quality10.style.display === "none") {
-        quality10.style.display = "block";
-    }
-    else {
-        quality10.style.display = "none"
-    }
-})
-
+fetchProducts();
 
 
 let darkmode = localStorage.getItem('darkmode')
@@ -161,70 +112,4 @@ themeSwitch.addEventListener("click", () => {
     darkmode = localStorage.getItem('darkmode')
     darkmode !== "active" ? enableDarkmode() : disableDarkmode()
 })
-
-
-
-
-//api
-let movieVideo = document.getElementById("myVideo");
-let movieDescription = document.getElementById("movie-description");
-let movieGenres = document.getElementById("genres");
-let movieRelease = document.getElementById("release_year");
-let movieRank = document.getElementById("rank");
-let Movies = [];
-
-const fetchProducts = async () => {
-    try {
-        const response = await fetch(apiUrlGenerator());
-        const data = await response.json();
-
-        addDataToHTMLMovie(data, document.querySelector(".part-of-movie"));
-
-    } catch (error) {
-        console.error("Error fetching movies", error);
-    }
-};
-
-function apiUrlGenerator() {
-    let idParam = new URLSearchParams(window.location.search).get("id");
-    return `https://dramoir.com/main/movie/${idParam}`;
-}
-
-function addDataToHTMLMovie(data, parts) {
-    movieVideo.setAttribute("src", data.trailer_link);
-    movieDescription.innerHTML = data.description;
-    movieGenres.textContent = data.genres.map(genre => genre.name).join(" ، ");
-    movieRelease.textContent = data.related_movies[0].release_year;
-    movieRank.textContent = data.rate;
-
-    parts.innerHTML = ""; 
-
-
-
-    const ul = document.createElement("ul"); 
-
-    for (let i = 0; i < data.download_urls.length; i++) {
-        const li = document.createElement("li");
-        li.classList.add("col-12", "quality", "set-center");
-        li.id = `quality${i + 1}`;
-  
-        li.innerHTML = `
-           <a href="${data.download_urls[i].download_url}" class="myimpcolor">
-            ${data.download_urls[i].quality}
-                         
-            <i class="fa-solid fa-download dark-purple"></i>
-         
-         </a>  
-        `;
-        ul.appendChild(li); 
-    
-    }
-
-    parts.appendChild(ul); 
-
-
-
-}
-
-fetchProducts();
 
