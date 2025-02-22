@@ -129,7 +129,7 @@ const displaySeries = (series) => {
 
             seriesItem.innerHTML = `
                 <a href="../download/imdex.html?id=${item.id}">
-                    <img src="https://dramoir.com/${item.image}">
+                    <img src="https://dramoir.com/${item.image}" style="padding-left:7px">
                   
                     <button>دانلود</button>
                 </a>
@@ -149,4 +149,14 @@ if (type && seriesIds) {
     fetchSeriesDetails(type, seriesIds);
 } else {
     document.getElementById("seriesContainer").innerHTML = "<p>هیچ سریالی انتخاب نشده است.</p>";
+}
+
+function toggleSubmenu(element) {
+    let parentLi = element.parentElement; // پیدا کردن والد <li>
+    let submenu = parentLi.querySelector(".submenu"); // زیرمنو داخل همان <li>
+    if (submenu) {
+        submenu.style.maxHeight = submenu.style.maxHeight === "0px" || submenu.style.maxHeight === "" 
+            ? submenu.scrollHeight + "px" 
+            : "0px";
+    }
 }
