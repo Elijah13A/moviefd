@@ -102,31 +102,31 @@ let apiUrl = "";
 switch (type) {
     case "best_korean_series":
         apiUrl = "https://dramoir.com/main/home/best_korean_series/";
-        pageTitle.innerText = "بهترین سریال‌های کره‌ای";
+        pageTitle.innerText ="در حال پخش کره ای:";
         break;
     case "best_chineas_series":
         apiUrl = "https://dramoir.com/main/home/best_chineas_series/";
-        pageTitle.innerText = "بهترین سریال‌های چینی";
+        pageTitle.innerText = "سریال های چینی:";
         break;
     case "best_series":
         apiUrl = "https://dramoir.com/main/home/best_series/";
-        pageTitle.innerText = "بهترین سریال‌ها";
+        pageTitle.innerText = " سریال های ژاپنی:";
         break;
     case "choosen_korean_series":
         apiUrl = "https://dramoir.com/main/home/choosen_korean_series/";
-        pageTitle.innerText = "سریال‌های منتخب کره‌ای";
+        pageTitle.innerText = " بهترین سریال های کره ای:";
         break;
     case "choosen_movies":
         apiUrl = "https://dramoir.com/main/home/choosen_movies/";
-        pageTitle.innerText = "فیلم‌های منتخب";
+        pageTitle.innerText = " فیلم سینمایی چینی:";
         break;
     case "choosen_korean_movies":
         apiUrl = "https://dramoir.com/main/home/choosen_korean_movies/";
-        pageTitle.innerText = "فیلم‌های منتخب کره‌ای";
+        pageTitle.innerText = "فیلم‌های کره‌ای:";
         break;
     default:
-        apiUrl = "https://dramoir.com/main/home/best_series/";
-        pageTitle.innerText = "بهترین سریال‌ها";
+        apiUrl = "https://dramoir.com/main/home/best_korean_series/";
+        pageTitle.innerText = "در حال پخش کره ای:";
         break;
 }
 
@@ -139,19 +139,29 @@ fetch(apiUrl)
         data.results.forEach(item => {
             const seriesItem = document.createElement("div");
             seriesItem.classList="col-md-2 col-4 movie-hover";
+            seriesItem.style.marginBottom="30px";
+           
             if (apiUrl.includes("series")){
                 seriesItem.innerHTML = `
-                <a href="../downloadSerie/imdex.html?id=${item.id}">
-                    <img src="https://dramoir.com/${item.image}" style="padding-left:7px" alt="${item.title}">
-                    <button>دانلود</button>
+                <a href="../downloadSerie/imdex.html?id=${item.id}" style="position:relative">
+                    <img src="https://dramoir.com/${item.image}" alt="${item.title}">
+                   
                 </a>
+                                  <div class="shiny-circle">
+        <div class="sharp-triangle"></div>
+    </div>
+                <div style="position:absolute;top:100%; text-align: center; font-size:13px; line-height:2" >${item.title}</div>
             `;
             } else {
                 seriesItem.innerHTML = `
                 <a href="../download/imdex.html?id=${item.id}">
-                    <img src="https://dramoir.com/${item.image}" style="padding-left:7px" alt="${item.title}">
-                    <button>دانلود</button>
+                    <img src="https://dramoir.com/${item.image}"  alt="${item.title}">
+                   
                 </a>
+                                              <div class="shiny-circle">
+        <div class="sharp-triangle"></div>
+    </div>
+                <div style="position:absolute;top:104%; text-align: center; font-size:13px" >${item.title}</div>
             `;
             }
           

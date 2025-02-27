@@ -889,3 +889,7 @@ h4 {
 .movie-hover:hover .shiny-circle{
    display: flex;
 }
+
+#keen-slider5,#keen-slider6{
+   margin-top: 35px;
+}

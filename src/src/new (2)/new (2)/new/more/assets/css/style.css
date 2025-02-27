@@ -482,7 +482,7 @@ a {
    display: flex;
    justify-content: center;
    margin-bottom: 20px;
-   border-radius: 25px;
+  
 
 }
 
@@ -528,8 +528,8 @@ a {
 
 .movie-hover img {
    transition: all .2s ease-in;
-   border-radius: 10px;
-
+   border-radius: 15px !important;
+padding:0 3.5px !important;
 }
 
 .movie-hover button {
@@ -694,4 +694,34 @@ footer{
 
 .header-sec{
    margin-bottom: 30px;
+}
+
+
+.shiny-circle {
+   width: 70px;
+   height: 70px;
+   border: 1px solid white;
+   border-radius: 50%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   
+   align-items: center;
+   justify-content: center;
+   background-color: transparent;
+   display: none;
+}
+.sharp-triangle {
+   width: 0;
+   height: 0;
+   border-top: 15px solid transparent;
+   border-bottom: 15px solid transparent;
+   border-right: 24px solid rgba(246, 244, 244, 0.911);
+   position: absolute;
+
+}
+
+.movie-hover:hover .shiny-circle{
+   display: flex;
 }
