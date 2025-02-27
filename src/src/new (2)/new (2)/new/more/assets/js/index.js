@@ -88,68 +88,79 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-
 //api
-const fetchSeriesDetails = async (type, seriesIds) => {
-    try {
-        const apiUrl = `https://dramoir.com/main/home/?format=json`;
-        const response = await fetch(apiUrl);
 
-        if (!response.ok) {
-            throw new Error(`Network response was not ok (${response.status})`);
-        }
+const seriesContainer = document.getElementById("seriesContainer");
+const pageTitle = document.getElementById("pageTitle");
 
-        const data = await response.json();
-        const seriesData = data[type]; // انتخاب داده‌ها بر اساس نوع دسته‌بندی
+// دریافت نوع از URL
+const urlParams = new URLSearchParams(window.location.search);
+const type = urlParams.get('type');
 
-        if (seriesData) {
-            displaySeries(seriesData);
-        }
-    } catch (error) {
-        console.error("Error fetching series details:", error);
-      
-    }
-};
+// تعیین لینک بر اساس نوع
+let apiUrl = "";
+switch (type) {
+    case "best_korean_series":
+        apiUrl = "https://dramoir.com/main/home/best_korean_series/";
+        pageTitle.innerText = "بهترین سریال‌های کره‌ای";
+        break;
+    case "best_chineas_series":
+        apiUrl = "https://dramoir.com/main/home/best_chineas_series/";
+        pageTitle.innerText = "بهترین سریال‌های چینی";
+        break;
+    case "best_series":
+        apiUrl = "https://dramoir.com/main/home/best_series/";
+        pageTitle.innerText = "بهترین سریال‌ها";
+        break;
+    case "choosen_korean_series":
+        apiUrl = "https://dramoir.com/main/home/choosen_korean_series/";
+        pageTitle.innerText = "سریال‌های منتخب کره‌ای";
+        break;
+    case "choosen_movies":
+        apiUrl = "https://dramoir.com/main/home/choosen_movies/";
+        pageTitle.innerText = "فیلم‌های منتخب";
+        break;
+    case "choosen_korean_movies":
+        apiUrl = "https://dramoir.com/main/home/choosen_korean_movies/";
+        pageTitle.innerText = "فیلم‌های منتخب کره‌ای";
+        break;
+    default:
+        apiUrl = "https://dramoir.com/main/home/best_series/";
+        pageTitle.innerText = "بهترین سریال‌ها";
+        break;
+}
 
-const displaySeries = (series) => {
-    const seriesContainer = document.getElementById("seriesContainer");
-    const pageTitle = document.getElementById("pageTitle");
 
-    // پاک کردن محتوای قبلی
-    seriesContainer.innerHTML = "";
-
-    if (series && series.length > 0) {
-        pageTitle.textContent = "سریال‌های منتخب"; // عنوان صفحه
-
-        
-        series.forEach(item => {
+// دریافت داده‌ها از API
+fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        // استفاده از data.results به جای data
+        data.results.forEach(item => {
             const seriesItem = document.createElement("div");
-            seriesItem.className = "col-md-2 col-4 movie-hover";
-
-            seriesItem.innerHTML = `
-                <a href="../download/imdex.html?id=${item.id}">
-                    <img src="https://dramoir.com/${item.image}" style="padding-left:7px">
-                  
+            seriesItem.classList="col-md-2 col-4 movie-hover";
+            if (apiUrl.includes("series")){
+                seriesItem.innerHTML = `
+                <a href="../downloadSerie/imdex.html?id=${item.id}">
+                    <img src="https://dramoir.com/${item.image}" style="padding-left:7px" alt="${item.title}">
                     <button>دانلود</button>
                 </a>
             `;
-
+            } else {
+                seriesItem.innerHTML = `
+                <a href="../download/imdex.html?id=${item.id}">
+                    <img src="https://dramoir.com/${item.image}" style="padding-left:7px" alt="${item.title}">
+                    <button>دانلود</button>
+                </a>
+            `;
+            }
+          
             seriesContainer.appendChild(seriesItem);
         });
-    } 
-};
+    })
+    .catch(error => console.error('Error fetching data:', error));
 
-// دریافت پارامترهای URL
-const urlParams = new URLSearchParams(window.location.search);
-const type = urlParams.get('type'); // دریافت نوع دسته‌بندی
-const seriesIds = urlParams.get('series'); // دریافت شناسه‌ها
 
-if (type && seriesIds) {
-    fetchSeriesDetails(type, seriesIds);
-} else {
-    document.getElementById("seriesContainer").innerHTML = "<p>هیچ سریالی انتخاب نشده است.</p>";
-}
 
 function toggleSubmenu(element) {
     let parentLi = element.parentElement; // پیدا کردن والد <li>

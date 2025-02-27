@@ -245,7 +245,7 @@ const fetchMovies = async (apiUrl) => {
 // تابع برای اضافه کردن داده‌ها به HTML
 const addDataToHTMLMovie = (series, keenSlider) => {
     if (!keenSlider) return; // اگر المنت وجود نداشت، خروج
-console.log(keenSlider);
+
     keenSlider.innerHTML = ""; // پاک کردن محتوا قبل از اضافه کردن داده جدید
 
     let container = document.createElement("div");
@@ -293,7 +293,7 @@ const fetchPhone = async (apiUrl) => {
         if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
-        console.log(data);
+      
 
         if (data.choosen_movie) {
             addDataToHTMLPhone(data.choosen_movie, document.getElementById("keen-slider5"));
@@ -349,41 +349,61 @@ fetchPhone("https://dramoir.com/main/home/?format=json");
 
 
 // more page
-const fetchMore = async (apiUrl) => {
+const fetchMore = async (apiUrls) => {
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("Network response was not ok");
+        const fetchPromises = apiUrls.map(url => fetch(url).then(response => {
+            if (!response.ok) {
+                console.warn(`Failed to fetch ${url}: ${response.status}`);
+                return null; // بازگشت null برای URLهای ناموفق
+            }
+            return response.json();
+        }));
 
-        const data = await response.json();
-        console.log(data);
-        if (data.best_korean_series) {
-            addDataToHTMLMore(data.best_korean_series, document.getElementById("headerSec1"), "جدیدترین سریال های کره ای", "best_korean_series");
-        }
-        if (data.best_chineas_series) {
-            addDataToHTMLMore(data.best_chineas_series, document.getElementById("headerSec2"), "جدیدترین سریال های چینی", "best_chineas_series");
-        }
-        if (data.best_series) {
-            addDataToHTMLMore(data.best_series, document.getElementById("headerSec3"), "بهترین سریال ها", "best_series");
-        }
-        if (data.choosen_korean_series) {
-            addDataToHTMLMore(data.choosen_korean_series, document.getElementById("headerSec4"), "سریال های منتخب کره ای", "choosen_korean_series");
-        }
-        if (data.choosen_movie) {
-            addDataToHTMLMore(data.choosen_movie, document.getElementById("headerSec5"), "فیلم های منتخب", "choosen_movie");
-        }
-        if (data.choosen_korean_movie) {
-            addDataToHTMLMore(data.choosen_korean_movie, document.getElementById("headerSec6"), "فیلم های منتخب کره ای", "choosen_korean_movie");
-        }
+        const results = await Promise.all(fetchPromises);
+
+        results.forEach((data, index) => {
+            if (!data) return; // اگر داده null باشد، از آن صرف‌نظر کنید
+
+            const apiUrl = apiUrls[index];
+            
+
+            // بررسی وجود `results` و اینکه یک آرایه است
+            if (!data.results || !Array.isArray(data.results)) {
+                console.warn(`Expected 'results' array in data from ${apiUrl}, but received:`, data);
+                return;
+            }
+
+            // ارسال `data.results` به تابع `addDataToHTMLMore`
+            if (apiUrl.includes("best_korean_series")) {
+                addDataToHTMLMore(data.results, document.getElementById("headerSec1"), "جدیدترین سریال های کره ای", "best_korean_series");
+            } else if (apiUrl.includes("best_chineas_series")) {
+                addDataToHTMLMore(data.results, document.getElementById("headerSec2"), "جدیدترین سریال های چینی", "best_chineas_series");
+            } else if (apiUrl.includes("best_series")) {
+                addDataToHTMLMore(data.results, document.getElementById("headerSec3"), "بهترین سریال ها", "best_series");
+            } else if (apiUrl.includes("choosen_korean_series")) {
+                addDataToHTMLMore(data.results, document.getElementById("headerSec4"), "سریال های منتخب کره ای", "choosen_korean_series");
+            } else if (apiUrl.includes("choosen_movies")) {
+                addDataToHTMLMore(data.results, document.getElementById("headerSec5"), "فیلم های منتخب", "choosen_movies");
+            } else if (apiUrl.includes("choosen_korean_movies")) {
+                addDataToHTMLMore(data.results, document.getElementById("headerSec6"), "فیلم های منتخب کره ای", "choosen_korean_movies");
+            }
+        });
 
     } catch (error) {
         console.error("Error fetching series:", error);
     }
 };
+
 const addDataToHTMLMore = (series, keenSlider, title, type) => {
-   
     if (!keenSlider) return; // اگر المنت وجود نداشت، خروج
 
     keenSlider.innerHTML = ""; // پاک کردن محتوا قبل از اضافه کردن داده جدید
+
+    // بررسی اینکه آیا series یک آرایه است
+    if (!Array.isArray(series)) {
+        console.error("Expected an array, but received:", series);
+        return;
+    }
 
     const slideItem = document.createElement("div");
 
@@ -397,8 +417,19 @@ const addDataToHTMLMore = (series, keenSlider, title, type) => {
 
     keenSlider.appendChild(slideItem);
 };
-// اجرای تابع `fetchMore`
-fetchMore("https://dramoir.com/main/home/?format=json");
+
+// لیست URLهای API
+const apiUrls = [
+    "https://dramoir.com/main/home/best_korean_series/",
+    "https://dramoir.com/main/home/best_chineas_series/",
+    "https://dramoir.com/main/home/best_series/",
+    "https://dramoir.com/main/home/choosen_korean_series/",
+    "https://dramoir.com/main/home/choosen_movies/",
+    "https://dramoir.com/main/home/choosen_korean_movies/"
+];
+
+// اجرای تابع `fetchMore` با لیست URLها
+fetchMore(apiUrls);
 
 
 function toggleSubmenu(element) {
