@@ -171,3 +171,273 @@ function toggleSubmenu(element) {
             : "0px";
     }
 }
+
+
+const apiUrlsseries = [
+    "https://dramoir.com/main/home/best_korean_series/",
+    "https://dramoir.com/main/home/best_chineas_series/",
+    "https://dramoir.com/main/home/best_series/",
+    "https://dramoir.com/main/home/choosen_korean_series/",
+  
+];
+
+
+const apiUrlsmovies = [
+   
+    "https://dramoir.com/main/home/choosen_movies/",
+    "https://dramoir.com/main/home/choosen_korean_movies/"
+];
+
+
+const fetchNavbar = async (apiUrlsseries) => {
+    try {
+        const fetchPromises = apiUrlsseries.map(async (url) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.warn(`Failed to fetch ${url}: ${response.status}`);
+                    return null;
+                }
+                return await response.json();
+            } catch (error) {
+                console.warn(`Error fetching ${url}:`, error);
+                return null;
+            }
+        });
+
+        const results = await Promise.all(fetchPromises);
+
+        const dropdownContent = document.getElementById("dropdown-content1");
+        if (!dropdownContent) {
+            console.error("Element with id 'dropdown-content1' not found");
+            return;
+        }
+        dropdownContent.innerHTML = ""; // Clear existing content
+
+        results.forEach((data, index) => {
+            if (!data) return;
+            const apiUrl = apiUrlsseries[index];
+            if (!data.results || !Array.isArray(data.results)) {
+                console.warn(`Expected 'results' array in data from ${apiUrl}, but received:`, data);
+                return;
+            }
+
+            // Create a new link for each category
+            const link = document.createElement("a");
+            if (apiUrl.includes("best_korean_series")) {
+                link.href = "../more/index.html?type=best_korean_series&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "سریال کره ای";
+            } else if (apiUrl.includes("best_chineas_series")) {
+                link.href = "../more/index.html?type=best_chineas_series&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "سریال چینی";
+            } else if (apiUrl.includes("best_series")) {
+                link.href = "../more/index.html?type=best_series&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "سریال خارجی";
+            } else if (apiUrl.includes("choosen_korean_series")) {
+                link.href = "../more/index.html?type=choosen_korean_series&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "سریال ترکی";
+            }
+
+            dropdownContent.appendChild(link);
+        });
+    } catch (error) {
+        console.error("Error fetching series:", error);
+    }
+};
+
+fetchNavbar(apiUrlsseries);
+
+// fetch navbar2
+const fetchNavbar2 = async (apiUrlsmovies) => {
+    try {
+        const fetchPromises = apiUrlsmovies.map(async (url) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.warn(`Failed to fetch ${url}: ${response.status}`);
+                    return null;
+                }
+                return await response.json();
+            } catch (error) {
+                console.warn(`Error fetching ${url}:`, error);
+                return null;
+            }
+        });
+
+        const results = await Promise.all(fetchPromises);
+
+        const dropdownContent = document.getElementById("dropdown-content2");
+        if (!dropdownContent) {
+            console.error("Element with id 'dropdown-content2' not found");
+            return;
+        }
+        dropdownContent.innerHTML = ""; // Clear existing content
+
+        results.forEach((data, index) => {
+            if (!data) return;
+            const apiUrl = apiUrlsmovies[index];
+            if (!data.results || !Array.isArray(data.results)) {
+                console.warn(`Expected 'results' array in data from ${apiUrl}, but received:`, data);
+                return;
+            }
+
+            // Create a new link for each category
+            const link = document.createElement("a");
+            if (apiUrl.includes("choosen_movies")) {
+                link.href = "../more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "فیلم کره ای";
+            } else if (apiUrl.includes("choosen_korean_movies")) {
+                link.href = "../more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = " فیلم خارجی";
+            }
+            dropdownContent.appendChild(link);
+        });
+    } catch (error) {
+        console.error("Error fetching series:", error);
+    }
+};
+
+fetchNavbar2(apiUrlsmovies);
+
+
+
+
+
+// phone navbar
+
+
+const fetchNavbarphone = async (apiUrlsseries) => {
+    try {
+        const fetchPromises = apiUrlsseries.map(async (url) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.warn(`Failed to fetch ${url}: ${response.status}`);
+                    return null;
+                }
+                return await response.json();
+            } catch (error) {
+                console.warn(`Error fetching ${url}:`, error);
+                return null;
+            }
+        });
+
+        const results = await Promise.all(fetchPromises);
+
+        const dropdownContent = document.getElementById("submenu1");
+        if (!dropdownContent) {
+            console.error("Element with id 'submenu1' not found");
+            return;
+        }
+        dropdownContent.innerHTML = ""; // Clear existing content
+
+        // Create a <ul> element
+        const ul = document.createElement("ul");
+        ul.className = "submenu";
+
+        results.forEach((data, index) => {
+            if (!data) return;
+            const apiUrl = apiUrlsseries[index];
+            if (!data.results || !Array.isArray(data.results)) {
+                console.warn(`Expected 'results' array in data from ${apiUrl}, but received:`, data);
+                return;
+            }
+
+            // Create a new <li> element for each category
+            const li = document.createElement("li");
+            li.className = "submenu-item";
+
+            // Create a new <a> element
+            const link = document.createElement("a");
+            if (apiUrl.includes("best_korean_series")) {
+                link.href = "../more/index.html?type=best_korean_series&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "سریال کره ای";
+            } else if (apiUrl.includes("best_chineas_series")) {
+                link.href = "../more/index.html?type=best_chineas_series&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "سریال چینی";
+            } else if (apiUrl.includes("best_series")) {
+                link.href = "../more/index.html?type=best_series&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "سریال خارجی";
+            } else if (apiUrl.includes("choosen_korean_series")) {
+                link.href = "../more/index.html?type=choosen_korean_series&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "سریال ترکی";
+            }
+
+            // Append the <a> to the <li>, and the <li> to the <ul>
+            li.appendChild(link);
+            ul.appendChild(li);
+        });
+
+        // Append the <ul> to the dropdown content
+        dropdownContent.appendChild(ul);
+    } catch (error) {
+        console.error("Error fetching series:", error);
+    }
+};
+
+fetchNavbarphone(apiUrlsseries);
+
+const fetchNavbar3 = async (apiUrlsmovies) => {
+    try {
+        const fetchPromises = apiUrlsmovies.map(async (url) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.warn(`Failed to fetch ${url}: ${response.status}`);
+                    return null;
+                }
+                return await response.json();
+            } catch (error) {
+                console.warn(`Error fetching ${url}:`, error);
+                return null;
+            }
+        });
+
+        const results = await Promise.all(fetchPromises);
+
+        const dropdownContent = document.getElementById("submenu2");
+        if (!dropdownContent) {
+            console.error("Element with id 'submenu2' not found");
+            return;
+        }
+        dropdownContent.innerHTML = ""; // Clear existing content
+
+        // Create a <ul> element
+        const ul = document.createElement("ul");
+        ul.className = "submenu";
+
+        results.forEach((data, index) => {
+            if (!data) return;
+            const apiUrl = apiUrlsmovies[index];
+            if (!data.results || !Array.isArray(data.results)) {
+                console.warn(`Expected 'results' array in data from ${apiUrl}, but received:`, data);
+                return;
+            }
+
+            // Create a new <li> element for each category
+            const li = document.createElement("li");
+            li.className = "submenu-item";
+
+            // Create a new <a> element
+            const link = document.createElement("a");
+            if (apiUrl.includes("choosen_movies")) {
+                link.href = "../more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "فیلم کره ای";
+            } else if (apiUrl.includes("choosen_korean_movies")) {
+                link.href = "../more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
+                link.textContent = "فیلم خارجی";
+            }
+
+            // Append the <a> to the <li>, and the <li> to the <ul>
+            li.appendChild(link);
+            ul.appendChild(li);
+        });
+
+        // Append the <ul> to the dropdown content
+        dropdownContent.appendChild(ul);
+    } catch (error) {
+        console.error("Error fetching series:", error);
+    }
+};
+
+fetchNavbar3(apiUrlsmovies);

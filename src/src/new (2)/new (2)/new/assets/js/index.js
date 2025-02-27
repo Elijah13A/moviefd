@@ -574,6 +574,8 @@ fetchNavbar2(apiUrlsmovies);
 
 
 // phone navbar
+
+
 const fetchNavbarphone = async (apiUrlsseries) => {
     try {
         const fetchPromises = apiUrlsseries.map(async (url) => {
