@@ -288,7 +288,7 @@ nav label span.bottom {
 }
 
 nav .sidebar {
-   width: 40%;
+   width: 60%;
    height: 100vh;
    position: absolute;
    top: 0;
@@ -788,7 +788,7 @@ h4 {
 
 .movie-hover img {
    transition: all .2s ease-in;
-   border-radius: 25px;
+   border-radius:10px;
    max-height: 200px;
 }
 
