@@ -111,16 +111,16 @@ const fetchNavbar = async (apiUrlsseries) => {
             const link = document.createElement("a");
             if (apiUrl.includes("best_korean_series")) {
                 link.href = "more/index.html?type=best_korean_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال کره ای";
+                link.textContent = "در حال پخش کره ای";
             } else if (apiUrl.includes("best_chineas_series")) {
                 link.href = "more/index.html?type=best_chineas_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال چینی";
+                link.textContent = "سریال های چینی";
             } else if (apiUrl.includes("best_series")) {
                 link.href = "more/index.html?type=best_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال خارجی";
+                link.textContent = "سریال های ژاپنی";
             } else if (apiUrl.includes("choosen_korean_series")) {
                 link.href = "more/index.html?type=choosen_korean_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال ترکی";
+                link.textContent = " بهترین سریال های کره ای " ;
             }
 
             dropdownContent.appendChild(link);
@@ -170,10 +170,10 @@ const fetchNavbar2 = async (apiUrlsmovies) => {
             const link = document.createElement("a");
             if (apiUrl.includes("choosen_movies")) {
                 link.href = "more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم کره ای";
+                link.textContent = "فیلم های سینمایی چینی";
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 link.href = "more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = " فیلم خارجی";
+                link.textContent = " فیلم های سینمایی کره ای";
             }
             dropdownContent.appendChild(link);
         });
@@ -236,16 +236,16 @@ const fetchNavbarphone = async (apiUrlsseries) => {
             const link = document.createElement("a");
             if (apiUrl.includes("best_korean_series")) {
                 link.href = "more/index.html?type=best_korean_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال کره ای";
+                link.textContent = "در حال پخش کره ای";
             } else if (apiUrl.includes("best_chineas_series")) {
                 link.href = "more/index.html?type=best_chineas_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال چینی";
+                link.textContent = "سریال های چینی";
             } else if (apiUrl.includes("best_series")) {
                 link.href = "more/index.html?type=best_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال خارجی";
+                link.textContent = "سریال های ژاپنی";
             } else if (apiUrl.includes("choosen_korean_series")) {
                 link.href = "more/index.html?type=choosen_korean_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال ترکی";
+                link.textContent = " بهترین سریال های کره ای";
             }
 
             // Append the <a> to the <li>, and the <li> to the <ul>
@@ -307,10 +307,10 @@ const fetchNavbar3 = async (apiUrlsmovies) => {
             const link = document.createElement("a");
             if (apiUrl.includes("choosen_movies")) {
                 link.href = "more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم کره ای";
+                link.textContent = "فیلم های سینمایی چینی";
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 link.href = "more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم خارجی";
+                link.textContent = "فیلم های سینمایی کره ای";
             }
 
             // Append the <a> to the <li>, and the <li> to the <ul>
@@ -363,11 +363,12 @@ const fetchMore = async (apiUrls) => {
                 addDataToHTMLMore(data.results, document.getElementById("headerSec3"), "سریال های ژاپنی:", "best_series");
             } else if (apiUrl.includes("choosen_korean_series")) {
                 addDataToHTMLMore(data.results, document.getElementById("headerSec4"), " بهترین سریال های کره ای:"  , "choosen_korean_series");
-            } else if (apiUrl.includes("choosen_movies")) {
-                addDataToHTMLMore(data.results, document.getElementById("headerSec6"), "فیلم سینمایی چینی :", "choosen_movies");
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 addDataToHTMLMore(data.results, document.getElementById("headerSec5"), "فیلم های کره ای:", "choosen_korean_movies");
             }
+             else if (apiUrl.includes("choosen_movies")) {
+                addDataToHTMLMore(data.results, document.getElementById("headerSec6"), "فیلم سینمایی چینی :", "choosen_movies");
+            } 
         });
 
     } catch (error) {
@@ -452,7 +453,7 @@ const fetchSeries = async (apiUrl) => {
     }
 };
 
-// تابع برای اضافه کردن داده‌ها به HTML
+
 const addDataToHTML = (series, keenSlider) => {
     if (!keenSlider) return; // اگر المنت وجود نداشت، خروج
 
@@ -493,7 +494,7 @@ const addDataToHTML = (series, keenSlider) => {
     });
 };
 
-// اجرای تابع `fetchSeries`
+
 fetchSeries("https://dramoir.com/main/home/?format=json");
 
 
@@ -510,7 +511,7 @@ document.querySelector('.search-btn').addEventListener('click', async function (
         const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(searchValue)}`);
         const data = await response.json();
 
-        // ترکیب تمام لیست‌های داخل شیء `data` در یک آرایه واحد
+        
         const allMovies = Object.values(data).flat();
 
         if (!Array.isArray(allMovies)) {
@@ -521,7 +522,7 @@ document.querySelector('.search-btn').addEventListener('click', async function (
 
         if (foundMovie) {
             window.location.href = `download/imdex.html?id=${foundMovie.id}`;
-            inputElement.value = ''; // پاک کردن فیلد جستجو
+            inputElement.value = ''; 
         } else {
             searchMessage.textContent = 'فیلمی با این عنوان پیدا نشد!';
             searchMessage.style.color = 'red';
@@ -666,11 +667,11 @@ const fetchPhone = async (apiUrl) => {
       
 
         if (data.choosen_movie) {
-            addDataToHTMLPhone(data.choosen_movie, document.getElementById("keen-slider5"));
+            addDataToHTMLPhone(data.choosen_movie, document.getElementById("keen-slider6"));
         }
 
         if (data.choosen_korean_movie) {
-            addDataToHTMLPhone(data.choosen_korean_movie, document.getElementById("keen-slider6"));
+            addDataToHTMLPhone(data.choosen_korean_movie, document.getElementById("keen-slider5"));
         }
 
     } catch (error) {

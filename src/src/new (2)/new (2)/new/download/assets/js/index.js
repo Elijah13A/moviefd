@@ -176,16 +176,16 @@ const fetchNavbar = async (apiUrlsseries) => {
             const link = document.createElement("a");
             if (apiUrl.includes("best_korean_series")) {
                 link.href = "../more/index.html?type=best_korean_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال کره ای";
+                link.textContent = "در حال پخش کره ای";
             } else if (apiUrl.includes("best_chineas_series")) {
                 link.href = "../more/index.html?type=best_chineas_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال چینی";
+                link.textContent = "سریال های چینی";
             } else if (apiUrl.includes("best_series")) {
                 link.href = "../more/index.html?type=best_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال خارجی";
+                link.textContent = "سریال های ژاپنی";
             } else if (apiUrl.includes("choosen_korean_series")) {
                 link.href = "../more/index.html?type=choosen_korean_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال ترکی";
+                link.textContent = "بهترین سریال های کره ای " ;
             }
 
             dropdownContent.appendChild(link);
@@ -235,10 +235,10 @@ const fetchNavbar2 = async (apiUrlsmovies) => {
             const link = document.createElement("a");
             if (apiUrl.includes("choosen_movies")) {
                 link.href = "../more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم کره ای";
+                link.textContent = "فیلم های سینمایی چینی";
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 link.href = "../more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = " فیلم خارجی";
+                link.textContent = " فیلم های سینمایی کره ای";
             }
             dropdownContent.appendChild(link);
         });
@@ -301,16 +301,16 @@ const fetchNavbarphone = async (apiUrlsseries) => {
             const link = document.createElement("a");
             if (apiUrl.includes("best_korean_series")) {
                 link.href = "../more/index.html?type=best_korean_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال کره ای";
+                link.textContent = "در حال پخش کره ای";
             } else if (apiUrl.includes("best_chineas_series")) {
                 link.href = "../more/index.html?type=best_chineas_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال چینی";
+                link.textContent = "سریال های چینی";
             } else if (apiUrl.includes("best_series")) {
                 link.href = "../more/index.html?type=best_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال خارجی";
+                link.textContent = "سریال های ژاپنی";
             } else if (apiUrl.includes("choosen_korean_series")) {
                 link.href = "../more/index.html?type=choosen_korean_series&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "سریال ترکی";
+                link.textContent = " بهترین سریال های کره ای";
             }
 
             // Append the <a> to the <li>, and the <li> to the <ul>
@@ -372,10 +372,10 @@ const fetchNavbar3 = async (apiUrlsmovies) => {
             const link = document.createElement("a");
             if (apiUrl.includes("choosen_movies")) {
                 link.href = "../more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم کره ای";
+                link.textContent = "فیلم های سینمایی چینی";
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 link.href = "../more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم خارجی";
+                link.textContent = "فیلم های سینمایی کره ای";
             }
 
             // Append the <a> to the <li>, and the <li> to the <ul>
