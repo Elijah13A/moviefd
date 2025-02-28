@@ -789,6 +789,7 @@ h4 {
 .movie-hover img {
    transition: all .2s ease-in;
    border-radius: 25px;
+   max-height: 200px;
 }
 
 .movie-hover button {
