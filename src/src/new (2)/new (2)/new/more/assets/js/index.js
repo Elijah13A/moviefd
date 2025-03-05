@@ -168,7 +168,7 @@ fetch(apiUrl)
                                   <div class="shiny-circle">
         <div class="sharp-triangle"></div>
     </div>
-                <div style="position:absolute;top:100%; text-align: center; font-size:13px; line-height:2" >${item.title}</div>
+                <div style="position:absolute;top:100%; text-align: center; font-size:13px; line-height:2" class="dd-text">${item.title}</div>
             `;
             } else {
                 seriesItem.innerHTML = `
