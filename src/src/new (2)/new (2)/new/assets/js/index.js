@@ -505,28 +505,42 @@ document.querySelector('.search-btn').addEventListener('click', async function (
     const searchValue = inputElement.value.trim().toLowerCase();
     const searchMessage = document.getElementById('search-message');
 
-    if (!searchValue) return;
+    if (!searchValue) {
+        searchMessage.textContent = 'لطفاً عنوانی را وارد کنید!';
+        searchMessage.style.color = 'red';
+        return;
+    }
 
     try {
         const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(searchValue)}`);
+        if (!response.ok) {
+            throw new Error('خطا در دریافت داده‌ها');
+        }
         const data = await response.json();
 
-        
-        const allMovies = Object.values(data).flat();
-
-        if (!Array.isArray(allMovies)) {
+        // بررسی ساختار داده‌ها
+        if (!data.movies || !data.series) {
             throw new Error('فرمت داده‌ها نادرست است!');
         }
 
-        const foundMovie = allMovies.find(item => item.title.toLowerCase().includes(searchValue));
+        
+        const foundMovie = data.movies.find(movie => movie.title.toLowerCase().includes(searchValue));
+       
+        const foundSerie = data.series.find(serie => serie.title.toLowerCase().includes(searchValue));
 
         if (foundMovie) {
+          
             window.location.href = `download/imdex.html?id=${foundMovie.id}`;
             inputElement.value = ''; 
-        } else {
-            searchMessage.textContent = 'فیلمی با این عنوان پیدا نشد!';
-            searchMessage.style.color = 'red';
+        } else if (foundSerie) {
+           
+            window.location.href = `downloadSerie/imdex.html?id=${foundSerie.id}`;
             inputElement.value = '';
+        } else {
+         
+            searchMessage.textContent = 'فیلم یا سریالی با این عنوان پیدا نشد!';
+            searchMessage.style.color = 'red';
+            inputElement.value = ''; 
         }
     } catch (error) {
         console.error('خطا در دریافت داده‌ها:', error);
@@ -535,9 +549,8 @@ document.querySelector('.search-btn').addEventListener('click', async function (
     }
 });
 
-
 document.querySelector('.delete-btn').addEventListener('click', function () {
-    document.querySelector('input[data-search]').value = ''; // پاک کردن مقدار ورودی
+    document.querySelector('input[data-search]').value = ''; 
 });
 
 
@@ -556,7 +569,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    searchIcon.addEventListener("click", async function () {
+    async function handleSearch() {
         const query = searchInput.value.trim().toLowerCase();
         if (!query) return;
 
@@ -566,20 +579,25 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const allMovies = Object.values(products).flat();
-        if (!Array.isArray(allMovies) || allMovies.length === 0) {
-            console.error("هیچ محصولی یافت نشد!");
-            return;
-        }
+        const allMovies = products.movies || [];
+        const allSeries = products.series || [];
 
-        const foundProduct = allMovies.find(product => product.title.toLowerCase().includes(query));
+        const foundMovie = allMovies.find(movie => movie.title.toLowerCase().includes(query));
+        const foundSerie = allSeries.find(serie => serie.title.toLowerCase().includes(query));
 
-        if (foundProduct) {
-            window.location.href = `download/imdex.html?id=${foundProduct.id}`;
+        if (foundMovie) {
+            // اگر فیلم پیدا شد، به صفحه فیلم‌ها ریدایرکت کنید
+            const movieRedirectPath = `download/imdex.html?id=${foundMovie.id}`;
+            window.location.href = movieRedirectPath;
+        } else if (foundSerie) {
+            // اگر سریال پیدا شد، به صفحه سریال‌ها ریدایرکت کنید
+            const serieRedirectPath = `downloadSerie/imdex.html?id=${foundSerie.id}`;
+            window.location.href = serieRedirectPath;
         } else {
+            // اگر هیچ محصولی پیدا نشد، پیام مناسب نمایش دهید
             const searchMessage1 = document.getElementById('search-message1');
             if (searchMessage1) {
-                searchMessage1.textContent = 'فیلمی با این عنوان پیدا نشد!';
+                searchMessage1.textContent = 'فیلم یا سریالی با این عنوان پیدا نشد!';
                 setTimeout(() => {
                     searchMessage1.textContent = "";
                 }, 2000);
@@ -587,10 +605,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         searchInput.value = ""; // پاک کردن مقدار ورودی پس از جستجو
-    });
+    }
+
+    searchIcon.addEventListener("click", handleSearch);
 });
-
-
 
 const fetchMovies = async (apiUrl) => {
     try {
@@ -622,18 +640,18 @@ const addDataToHTMLMovie = (series, keenSlider) => {
     let container = document.createElement("div");
     container.classList.add("container-fluid");
 
-    for (let i = 0; i < Math.min(8, series.length); i += 4) {
+    for (let i = 0; i < Math.min(12, series.length); i += 6) {
         const row = document.createElement("div");
         row.classList.add("row"); // اضافه کردن کلاس برای کنترل نمایش ردیف‌ها
 
-        if (i >= 4) {
+        if (i >= 6) {
             row.style.marginTop = "30px"; // فاصله ۳۰ پیکسلی برای ردیف دوم
         }
 
-        for (let j = i; j < i + 4 && j < Math.min(8, series.length); j++) {
+        for (let j = i; j < i + 6 && j < Math.min(12, series.length); j++) {
             const serie = series[j];
             const col = document.createElement("div");
-            col.classList.add("col-md-3", "movie-hover");
+            col.classList.add("col-md-2", "movie-hover");
 
             col.innerHTML = `
 <div class="col-md-3 movie-hover" style="    display: flex;

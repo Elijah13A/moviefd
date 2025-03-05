@@ -551,3 +551,59 @@ const fetchNavbar3 = async (apiUrlsmovies) => {
 };
 
 fetchNavbar3(apiUrlsmovies);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchIcon = document.querySelector(".magnifier");
+    const searchInput = document.querySelector(".input");
+
+    async function fetchProducts(query) {
+        try {
+            const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(query)}`);
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            return [];
+        }
+    }
+
+    async function handleSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (!query) return;
+
+        const products = await fetchProducts(query);
+        if (!products || typeof products !== "object") {
+            console.error("فرمت داده‌های دریافتی نادرست است!");
+            return;
+        }
+
+        const allMovies = products.movies || [];
+        const allSeries = products.series || [];
+
+        const foundMovie = allMovies.find(movie => movie.title.toLowerCase().includes(query));
+        const foundSerie = allSeries.find(serie => serie.title.toLowerCase().includes(query));
+
+        if (foundMovie) {
+            // اگر فیلم پیدا شد، به صفحه فیلم‌ها ریدایرکت کنید
+            const movieRedirectPath = `../download/imdex.html?id=${foundMovie.id}`;
+            window.location.href = movieRedirectPath;
+        } else if (foundSerie) {
+            // اگر سریال پیدا شد، به صفحه سریال‌ها ریدایرکت کنید
+            const serieRedirectPath = `../downloadSerie/imdex.html?id=${foundSerie.id}`;
+            window.location.href = serieRedirectPath;
+        } else {
+            // اگر هیچ محصولی پیدا نشد، پیام مناسب نمایش دهید
+            const searchMessage1 = document.getElementById('search-message1');
+            if (searchMessage1) {
+                searchMessage1.textContent = 'فیلم یا سریالی با این عنوان پیدا نشد!';
+                setTimeout(() => {
+                    searchMessage1.textContent = "";
+                }, 2000);
+            }
+        }
+
+        searchInput.value = ""; // پاک کردن مقدار ورودی پس از جستجو
+    }
+
+    searchIcon.addEventListener("click", handleSearch);
+});

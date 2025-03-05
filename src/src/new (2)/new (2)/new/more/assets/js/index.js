@@ -56,9 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchIcon = document.querySelector(".magnifier");
     const searchInput = document.querySelector(".input");
 
-    async function fetchProducts() {
+    async function fetchProducts(query) {
         try {
-            const response = await fetch("https://fakestoreapi.com/products");
+            const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(query)}`);
             return await response.json();
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -66,28 +66,46 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    searchIcon.addEventListener("click", async function () {
+    async function handleSearch() {
         const query = searchInput.value.trim().toLowerCase();
         if (!query) return;
 
-        const products = await fetchProducts();
-        const foundProduct = products.find(product => product.title.toLowerCase().includes(query));
-
-        if (foundProduct) {
-            window.location.href = `../download/imdex.html?id=${foundProduct.id}`;
-            document.querySelector('.input').value = '';
-        } else {
-            const searchMessage1 = document.getElementById('search-message1');
-            searchMessage1.textContent = 'فیلمی با این عنوان پیدا نشد!'; 
-            // بعد از یک ثانیه متن را پاک کن
-            setTimeout(() => {
-                searchMessage1.textContent = "";
-            }, 2000);
-            document.querySelector('.input').value = '';
+        const products = await fetchProducts(query);
+        if (!products || typeof products !== "object") {
+            console.error("فرمت داده‌های دریافتی نادرست است!");
+            return;
         }
-    });
-});
 
+        const allMovies = products.movies || [];
+        const allSeries = products.series || [];
+
+        const foundMovie = allMovies.find(movie => movie.title.toLowerCase().includes(query));
+        const foundSerie = allSeries.find(serie => serie.title.toLowerCase().includes(query));
+
+        if (foundMovie) {
+            // اگر فیلم پیدا شد، به صفحه فیلم‌ها ریدایرکت کنید
+            const movieRedirectPath = `../download/imdex.html?id=${foundMovie.id}`;
+            window.location.href = movieRedirectPath;
+        } else if (foundSerie) {
+            // اگر سریال پیدا شد، به صفحه سریال‌ها ریدایرکت کنید
+            const serieRedirectPath = `../downloadSerie/imdex.html?id=${foundSerie.id}`;
+            window.location.href = serieRedirectPath;
+        } else {
+            // اگر هیچ محصولی پیدا نشد، پیام مناسب نمایش دهید
+            const searchMessage1 = document.getElementById('search-message1');
+            if (searchMessage1) {
+                searchMessage1.textContent = 'فیلم یا سریالی با این عنوان پیدا نشد!';
+                setTimeout(() => {
+                    searchMessage1.textContent = "";
+                }, 2000);
+            }
+        }
+
+        searchInput.value = ""; // پاک کردن مقدار ورودی پس از جستجو
+    }
+
+    searchIcon.addEventListener("click", handleSearch);
+});
 //api
 
 const seriesContainer = document.getElementById("seriesContainer");
@@ -161,7 +179,7 @@ fetch(apiUrl)
                                               <div class="shiny-circle">
         <div class="sharp-triangle"></div>
     </div>
-                <div style="position:absolute;top:104%; text-align: center; font-size:13px" >${item.title}</div>
+                <div style="position:absolute;top:104%; text-align: center; font-size:13px" class="dd-text" > ${item.title}</div>
             `;
             }
           
