@@ -53,7 +53,14 @@ body {
    background-color: var(--light-purple) !important;
 }
 
-
+.bebas-neue-regular {
+   font-family: "Bebas Neue", sans-serif;
+   font-weight: bolder;
+   font-style: normal;
+   color: white;
+   font-size: 20px;
+ }
+ 
 .mode-button {
    border: none;
    padding: .8em 2em;
@@ -344,7 +351,7 @@ body {
    float: left;
    position: absolute;
    left: 20px;
-   top: 10px;
+   top: 12.5px;
 }
 
 .search-bar-container {

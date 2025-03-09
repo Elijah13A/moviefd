@@ -334,8 +334,15 @@ body {
    float: left;
    position: absolute;
    left: 20px;
-   top: 10px;
+   top: 12.5px;
 }
+.bebas-neue-regular {
+   font-family: "Bebas Neue", sans-serif;
+   font-weight: bolder;
+   font-style: normal;
+   color: white;
+   font-size: 20px;
+ }
 
 .search-bar-container {
    display: flex;
