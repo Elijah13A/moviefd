@@ -393,7 +393,7 @@ const addDataToHTMLMore = (series, keenSlider, title, type) => {
     const seriesIds = series.map(item => item.id).join(",");
 
     slideItem.innerHTML = `
-        <h4 class="spanb-sm dark-mc" style="font-weight:bolder; margin-right: -30px;">${title}</h4>
+        <h4 class="spanb-sm dark-mc my-60" style="font-weight:bolder; margin-right: -30px;">${title}</h4>
         <a href="more/index.html?type=${type}&series=${seriesIds}"><span class="all" style="font-weight: bolder;">مشاهده همه</span></a>
     `;
 

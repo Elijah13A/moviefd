@@ -738,11 +738,11 @@ h4 {
 
 .movie-title {
    width: 100%;
-   margin-right: 100px;
+   margin-right: 20px;
 }
 
 .movie-sec {
-   padding:0 40px;
+   padding-right: 60px;
    display: flex;
    align-items: center;
    align-content: center;
