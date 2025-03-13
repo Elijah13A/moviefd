@@ -182,7 +182,7 @@ const fetchSeries = async () => {
 
 function apiUrlGeneratorSeries() {
     let idParam = new URLSearchParams(window.location.search).get("id");
-    return `https://dramoir.com/main/series/${idParam}`;
+    return `https://api.dramoir.com/main/series/${idParam}`;
 }
 
 function addDataToHTMLSeries(data, parts) {
@@ -284,18 +284,18 @@ function toggleSubmenu(element) {
 
 
 const apiUrlsseries = [
-    "https://dramoir.com/main/home/best_korean_series/",
-    "https://dramoir.com/main/home/best_chineas_series/",
-    "https://dramoir.com/main/home/best_series/",
-    "https://dramoir.com/main/home/choosen_korean_series/",
+    "https://api.dramoir.com/main/home/best_korean_series/",
+    "https://api.dramoir.com/main/home/best_chineas_series/",
+    "https://api.dramoir.com/main/home/best_series/",
+    "https://api.dramoir.com/main/home/choosen_korean_series/",
   
 ];
 
 
 const apiUrlsmovies = [
    
-    "https://dramoir.com/main/home/choosen_movies/",
-    "https://dramoir.com/main/home/choosen_korean_movies/"
+    "https://api.dramoir.com/main/home/choosen_movies/",
+    "https://api.dramoir.com/main/home/choosen_korean_movies/"
 ];
 
 
@@ -559,7 +559,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fetchProducts(query) {
         try {
-            const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(query)}`);
+            const response = await fetch(`https://api.dramoir.com/main/search/?q=${encodeURIComponent(query)}`);
             return await response.json();
         } catch (error) {
             console.error("Error fetching products:", error);

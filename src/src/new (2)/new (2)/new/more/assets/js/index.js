@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fetchProducts(query) {
         try {
-            const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(query)}`);
+            const response = await fetch(`https://api.dramoir.com/main/search/?q=${encodeURIComponent(query)}`);
             return await response.json();
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -119,31 +119,31 @@ const type = urlParams.get('type');
 let apiUrl = "";
 switch (type) {
     case "best_korean_series":
-        apiUrl = "https://dramoir.com/main/home/best_korean_series/";
+        apiUrl = "https://api.dramoir.com/main/home/best_korean_series/";
         pageTitle.innerText ="در حال پخش کره ای:";
         break;
     case "best_chineas_series":
-        apiUrl = "https://dramoir.com/main/home/best_chineas_series/";
+        apiUrl = "https://api.dramoir.com/main/home/best_chineas_series/";
         pageTitle.innerText = "سریال های چینی:";
         break;
     case "best_series":
-        apiUrl = "https://dramoir.com/main/home/best_series/";
+        apiUrl = "https://api.dramoir.com/main/home/best_series/";
         pageTitle.innerText = " سریال های ژاپنی:";
         break;
     case "choosen_korean_series":
-        apiUrl = "https://dramoir.com/main/home/choosen_korean_series/";
+        apiUrl = "https://api.dramoir.com/main/home/choosen_korean_series/";
         pageTitle.innerText = " بهترین سریال های کره ای:";
         break;
     case "choosen_movies":
-        apiUrl = "https://dramoir.com/main/home/choosen_movies/";
+        apiUrl = "https://api.dramoir.com/main/home/choosen_movies/";
         pageTitle.innerText = " فیلم سینمایی چینی:";
         break;
     case "choosen_korean_movies":
-        apiUrl = "https://dramoir.com/main/home/choosen_korean_movies/";
+        apiUrl = "https://api.dramoir.com/main/home/choosen_korean_movies/";
         pageTitle.innerText = "فیلم‌های کره‌ای:";
         break;
     default:
-        apiUrl = "https://dramoir.com/main/home/best_korean_series/";
+        apiUrl = "https://api.dramoir.com/main/home/best_korean_series/";
         pageTitle.innerText = "در حال پخش کره ای:";
         break;
 }
@@ -162,7 +162,7 @@ fetch(apiUrl)
             if (apiUrl.includes("series")){
                 seriesItem.innerHTML = `
                 <a href="../downloadSerie/imdex.html?id=${item.id}" style="position:relative">
-                    <img src="https://dramoir.com/${item.image}" alt="${item.title}">
+                    <img src="https://api.dramoir.com/${item.image}" alt="${item.title}">
                    
                 </a>
                                   <div class="shiny-circle">
@@ -173,7 +173,7 @@ fetch(apiUrl)
             } else {
                 seriesItem.innerHTML = `
                 <a href="../download/imdex.html?id=${item.id}">
-                    <img src="https://dramoir.com/${item.image}"  alt="${item.title}">
+                    <img src="https://api.dramoir.com/${item.image}"  alt="${item.title}">
                    
                 </a>
                                               <div class="shiny-circle">
@@ -202,18 +202,18 @@ function toggleSubmenu(element) {
 
 
 const apiUrlsseries = [
-    "https://dramoir.com/main/home/best_korean_series/",
-    "https://dramoir.com/main/home/best_chineas_series/",
-    "https://dramoir.com/main/home/best_series/",
-    "https://dramoir.com/main/home/choosen_korean_series/",
+    "https://api.dramoir.com/main/home/best_korean_series/",
+    "https://api.dramoir.com/main/home/best_chineas_series/",
+    "https://api.dramoir.com/main/home/best_series/",
+    "https://api.dramoir.com/main/home/choosen_korean_series/",
   
 ];
 
 
 const apiUrlsmovies = [
    
-    "https://dramoir.com/main/home/choosen_movies/",
-    "https://dramoir.com/main/home/choosen_korean_movies/"
+    "https://api.dramoir.com/main/home/choosen_movies/",
+    "https://api.dramoir.com/main/home/choosen_korean_movies/"
 ];
 
 

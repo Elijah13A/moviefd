@@ -59,18 +59,18 @@ themeSwitch.addEventListener("click", () => {
 
 //fetch navbar
 const apiUrlsseries = [
-    "https://dramoir.com/main/home/best_korean_series/",
-    "https://dramoir.com/main/home/best_chineas_series/",
-    "https://dramoir.com/main/home/best_series/",
-    "https://dramoir.com/main/home/choosen_korean_series/",
+    "https://api.dramoir.com/main/home/best_korean_series/",
+    "https://api.dramoir.com/main/home/best_chineas_series/",
+    "https://api.dramoir.com/main/home/best_series/",
+    "https://api.dramoir.com/main/home/choosen_korean_series/",
   
 ];
 
 
 const apiUrlsmovies = [
    
-    "https://dramoir.com/main/home/choosen_movies/",
-    "https://dramoir.com/main/home/choosen_korean_movies/"
+    "https://api.dramoir.com/main/home/choosen_movies/",
+    "https://api.dramoir.com/main/home/choosen_korean_movies/"
 ];
 
 
@@ -402,12 +402,12 @@ const addDataToHTMLMore = (series, keenSlider, title, type) => {
 
 // لیست URLهای API
 const apiUrls = [
-    "https://dramoir.com/main/home/best_korean_series/",
-    "https://dramoir.com/main/home/best_chineas_series/",
-    "https://dramoir.com/main/home/best_series/",
-    "https://dramoir.com/main/home/choosen_korean_series/",
-    "https://dramoir.com/main/home/choosen_movies/",
-    "https://dramoir.com/main/home/choosen_korean_movies/"
+    "https://api.dramoir.com/main/home/best_korean_series/",
+    "https://api.dramoir.com/main/home/best_chineas_series/",
+    "https://api.dramoir.com/main/home/best_series/",
+    "https://api.dramoir.com/main/home/choosen_korean_series/",
+    "https://api.dramoir.com/main/home/choosen_movies/",
+    "https://api.dramoir.com/main/home/choosen_korean_movies/"
 ];
 
 // اجرای تابع `fetchMore` با لیست URLها
@@ -468,7 +468,7 @@ const addDataToHTML = (series, keenSlider) => {
                 <div style="position: relative;" class="row">
                     <div class="col-md-4 col-6 img-container">
                         
-                            <img src="https://dramoir.com/${serie.image}" class="img-poster">
+                            <img src="https://api.dramoir.com/${serie.image}" class="img-poster">
                         
                     </div>
                     <div class="col-6 col-md-8 info">
@@ -495,7 +495,7 @@ const addDataToHTML = (series, keenSlider) => {
 };
 
 
-fetchSeries("https://dramoir.com/main/home/?format=json");
+fetchSeries("https://api.dramoir.com/main/home/?format=json");
 
 
 
@@ -512,7 +512,7 @@ document.querySelector('.search-btn').addEventListener('click', async function (
     }
 
     try {
-        const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(searchValue)}`);
+        const response = await fetch(`https://api.dramoir.com/main/search/?q=${encodeURIComponent(searchValue)}`);
         if (!response.ok) {
             throw new Error('خطا در دریافت داده‌ها');
         }
@@ -561,7 +561,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fetchProducts(query) {
         try {
-            const response = await fetch(`https://dramoir.com/main/search/?q=${encodeURIComponent(query)}`);
+            const response = await fetch(`https://api.dramoir.com/main/search/?q=${encodeURIComponent(query)}`);
             return await response.json();
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -658,7 +658,7 @@ const addDataToHTMLMovie = (series, keenSlider) => {
             align-items: center;
             justify-content: center;">
                     <a href="download/imdex.html?id=${serie.id}">
-                        <img src="https://dramoir.com/${serie.image}">
+                        <img src="https://api.dramoir.com/${serie.image}">
                       <div class="shiny-circle">
         <div class="sharp-triangle"></div>
     </div>
@@ -673,7 +673,7 @@ const addDataToHTMLMovie = (series, keenSlider) => {
 };
 
 // اجرای تابع `fetchMovies`
-fetchMovies("https://dramoir.com/main/home/?format=json");
+fetchMovies("https://api.dramoir.com/main/home/?format=json");
 
 
 const fetchPhone = async (apiUrl) => {
@@ -713,7 +713,7 @@ const addDataToHTMLPhone = (series, keenSlider) => {
         slideItem.innerHTML = `
             <div class="col-md-3 movie-hover" id="first-half" style="display: flex; align-items: center; justify-content: center;">
                 <a href="download/imdex.html?id=${topSerie.id}">
-                    <img src="https://dramoir.com/${topSerie.image}">
+                    <img src="https://api.dramoir.com/${topSerie.image}">
                     <div class="shiny-circle">
                         <div class="sharp-triangle"></div>
                     </div>
@@ -721,7 +721,7 @@ const addDataToHTMLPhone = (series, keenSlider) => {
             </div>
             <div class="col-md-3 movie-hover" id="second-half" style="display: flex; align-items: center; justify-content: center;">
                 <a href="download/imdex.html?id=${bottomSerie.id}">
-                    <img src="https://dramoir.com/${bottomSerie.image}">
+                    <img src="https://api.dramoir.com/${bottomSerie.image}">
                     <div class="shiny-circle">
                         <div class="sharp-triangle"></div>
                     </div>
@@ -734,5 +734,5 @@ const addDataToHTMLPhone = (series, keenSlider) => {
 };
 
 // اجرای تابع `fetchPhone`
-fetchPhone("https://dramoir.com/main/home/?format=json");
+fetchPhone("https://api.dramoir.com/main/home/?format=json");
 
