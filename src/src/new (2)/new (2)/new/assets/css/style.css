@@ -742,7 +742,7 @@ h4 {
 }
 
 .movie-sec {
-   padding: 0 40px;
+   padding-right: 40px;
    display: flex;
    align-items: center;
    align-content: center;
