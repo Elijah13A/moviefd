@@ -541,7 +541,7 @@ a {
 .movie-hover img {
    transition: all .2s ease-in;
    border-radius: 15px !important;
-padding:0 3.5px !important;
+padding:0 8.5px !important;
 }
 
 .movie-hover button {
