@@ -74,6 +74,8 @@ body {
    font-weight: 500;
    cursor: pointer;
 }
+
+
 .dot{
    position: absolute; 
    top: 4px;
