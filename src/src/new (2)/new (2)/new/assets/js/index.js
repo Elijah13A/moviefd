@@ -90,7 +90,6 @@ const fetchTrends = async (apiUrl) => {
 
 const addDataToHTMLTrends = (items, kind) => {
     const swiperWrapper = document.getElementById("swiper");
-   
     items.forEach((item) => {
         const slideItem = document.createElement("div");
         slideItem.classList.add("swiper-slide");
@@ -134,7 +133,6 @@ const addDataToHTMLTrends = (items, kind) => {
         swiperWrapper.appendChild(slideItem);
     });
 };
-
 const initializeSwiper = () => {
     var swiper = new Swiper(".mySwiper", {
         spaceBetween: 30,

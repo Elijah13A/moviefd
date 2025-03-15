@@ -19,14 +19,16 @@
     .swiper{
         height: 220px;
     }
-    .detail{
-      padding-right: 150px !important;
-    }
+   
     .all{
         font-size: 15px;
     }
 .swiper, .swiper-wrapper, .first-slide{
     height: 400px;
+}
+.detail button{
+    right: 250px;
+    top:150px ;
 }
 }
 
@@ -50,9 +52,7 @@
     .swiper{
         height: 260px;
     }
-    .detail{
-        padding-right: 120px !important;
-    }
+  
     .all{
         font-size: 15px;
     }
@@ -61,6 +61,10 @@
       }
       .swiper, .swiper-wrapper, .first-slide{
         height: 400px;
+    }
+    .detail button{
+        right:250px ;
+        top:150px ;
     }
 }
 
@@ -84,9 +88,7 @@
     .swiper{
         height: 300px;
     }
-    .detail{
-        padding-right: 100px !important;
-    }
+  
     .all{
         font-size: 20px;
     }
@@ -97,7 +99,10 @@
       .swiper, .swiper-wrapper, .first-slide{
         height: 300px;
     }
-      
+    .detail button{
+        right: 200px;
+        top:100px ;
+    } 
 }
 
 @media (max-width: 767px) {
@@ -121,9 +126,7 @@
     .span-sm {
         font-size: 15px;
     }
-    .detail{
-        padding-right: 100px !important;
-    }
+  
     .all{
         font-size: 12px;
     }
@@ -133,5 +136,9 @@
       }
       .swiper, .swiper-wrapper, .first-slide{
         height: 300px;
+    }
+    .detail button{
+        right:120px ;
+        top:120px ;
     }
 }
