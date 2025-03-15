@@ -194,7 +194,7 @@ body {
    justify-content: center;
    align-items: center;
    position: absolute;
-   top: 4px;
+   top: 2px;
    right: 100px;
  }
 #theme-switch svg{
@@ -209,7 +209,9 @@ body {
  .darkmode #theme-switch svg:last-child{
    display: block;
  }
-
+ #submenu1, #submenu2 {
+   padding-right: 5px !important;
+}
 #inputTag {
    display: none;
 }

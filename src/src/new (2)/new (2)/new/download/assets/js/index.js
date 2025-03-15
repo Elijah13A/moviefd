@@ -93,17 +93,23 @@ const addDataToHTMLMovie = (data, parts) => {
 fetchProducts();
 
 
+
 let darkmode = localStorage.getItem('darkmode')
 const themeSwitch = document.getElementById('theme-switch')
 
 const enableDarkmode = () => {
     document.body.classList.add('darkmode')
     localStorage.setItem('darkmode', 'active')
+    const moon=document.getElementById("my-moon");
+    moon.style.display="none";
 }
 
 const disableDarkmode = () => {
     document.body.classList.remove('darkmode')
-    localStorage.setItem('darkmode', null)
+    localStorage.setItem('darkmode', null);
+    const moon=document.getElementById("my-moon");
+    moon.style.display="block";
+   
 }
 
 if (darkmode === "active") enableDarkmode()
@@ -112,6 +118,7 @@ themeSwitch.addEventListener("click", () => {
     darkmode = localStorage.getItem('darkmode')
     darkmode !== "active" ? enableDarkmode() : disableDarkmode()
 })
+
 
 function toggleSubmenu(element) {
     let parentLi = element.parentElement; // پیدا کردن والد <li>

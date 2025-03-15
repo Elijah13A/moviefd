@@ -61,7 +61,101 @@ themeSwitch.addEventListener("click", () => {
 
 //api
 
+//fetch trend
+const fetchTrends = async (apiUrl) => {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Network response was not ok");
 
+        const data = await response.json();
+  
+        if (data.trend_movies && data.trend_movies.length > 0) {
+            addDataToHTMLTrends(data.trend_movies, "movies");
+        } else {
+            console.log("No trend movies found.");
+        }
+
+        if (data.trend_series && data.trend_series.length > 0) {
+            addDataToHTMLTrends(data.trend_series, "series");
+        } else {
+            console.log("No trend series found.");
+        }
+
+        initializeSwiper();
+
+    } catch (error) {
+        console.error("Error fetching trends:", error); 
+    }
+};
+
+const addDataToHTMLTrends = (items, kind) => {
+    const swiperWrapper = document.getElementById("swiper");
+   
+    items.forEach((item) => {
+        const slideItem = document.createElement("div");
+        slideItem.classList.add("swiper-slide");
+
+        // ایجاد لینک و محتوای اسلاید
+        const link = document.createElement("a");
+        link.href = kind === "movies" 
+            ? `download/imdex.html?id=${item.id}` 
+            : `downloadSerie/imdex.html?id=${item.id}`;
+        link.classList.add("first-slide", "p-0");
+
+        // ایجاد تصویر
+        const image = document.createElement("img");
+        image.src = `https://api.dramoir.com${item.image}`;
+        image.alt = item.title;
+
+        // ایجاد جزئیات اسلاید
+        const sliderDetails = document.createElement("div");
+        sliderDetails.classList.add("slider-details");
+
+        const detail = document.createElement("div");
+        detail.classList.add("detail");
+
+        const title = document.createElement("h3");
+        title.classList.add("h-sm");
+        title.textContent = item.title;
+
+        const button = document.createElement("button");
+        button.classList.add("spanb-sm");
+        button.style.marginTop = "60px";
+        button.style.marginRight = "-60px";
+        button.textContent = "مشاهده";
+
+        // اضافه کردن عناصر به DOM
+        detail.appendChild(title);
+        detail.appendChild(button);
+        sliderDetails.appendChild(detail);
+        link.appendChild(image);
+        link.appendChild(sliderDetails);
+        slideItem.appendChild(link);
+        swiperWrapper.appendChild(slideItem);
+    });
+};
+
+const initializeSwiper = () => {
+    var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+};
+
+// فراخوانی تابع fetchTrends با آدرس API
+fetchTrends("https://api.dramoir.com/main/home/?format=json");
 //fetch navbar
 const apiUrlsseries = [
     "https://api.dramoir.com/main/home/best_korean_series/",

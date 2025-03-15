@@ -30,26 +30,31 @@ function prevSlide() {
     showSlide(currentIndex - 1);
 }
 
+
 let darkmode = localStorage.getItem('darkmode')
 const themeSwitch = document.getElementById('theme-switch')
 
 const enableDarkmode = () => {
-  document.body.classList.add('darkmode')
-  localStorage.setItem('darkmode', 'active')
+    document.body.classList.add('darkmode')
+    localStorage.setItem('darkmode', 'active')
+    const moon=document.getElementById("my-moon");
+    moon.style.display="none";
 }
 
 const disableDarkmode = () => {
-  document.body.classList.remove('darkmode')
-  localStorage.setItem('darkmode', null)
+    document.body.classList.remove('darkmode')
+    localStorage.setItem('darkmode', null);
+    const moon=document.getElementById("my-moon");
+    moon.style.display="block";
+   
 }
 
-if(darkmode === "active") enableDarkmode()
+if (darkmode === "active") enableDarkmode()
 
 themeSwitch.addEventListener("click", () => {
-  darkmode = localStorage.getItem('darkmode')
-  darkmode !== "active" ? enableDarkmode() : disableDarkmode()
+    darkmode = localStorage.getItem('darkmode')
+    darkmode !== "active" ? enableDarkmode() : disableDarkmode()
 })
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
