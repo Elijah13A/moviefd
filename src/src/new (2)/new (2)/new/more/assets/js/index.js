@@ -141,7 +141,7 @@ switch (type) {
         break;
     case "choosen_movies":
         apiUrl = "https://api.dramoir.com/main/home/choosen_movies/";
-        pageTitle.innerText = " فیلم سینمایی چینی:";
+        pageTitle.innerText = " فیلم های چینی:";
         break;
     case "choosen_korean_movies":
         apiUrl = "https://api.dramoir.com/main/home/choosen_korean_movies/";
@@ -318,7 +318,7 @@ const fetchNavbar2 = async (apiUrlsmovies) => {
             const link = document.createElement("a");
             if (apiUrl.includes("choosen_movies")) {
                 link.href = "../more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم های سینمایی چینی";
+                link.textContent = "فیلم های چینی";
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 link.href = "../more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
                 link.textContent = " فیلم های سینمایی کره ای";
@@ -455,7 +455,7 @@ const fetchNavbar3 = async (apiUrlsmovies) => {
             const link = document.createElement("a");
             if (apiUrl.includes("choosen_movies")) {
                 link.href = "../more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم های سینمایی چینی";
+                link.textContent = "فیلم های چینی";
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 link.href = "../more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
                 link.textContent = "فیلم های سینمایی کره ای";

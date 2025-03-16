@@ -267,7 +267,7 @@ const fetchNavbar2 = async (apiUrlsmovies) => {
             const link = document.createElement("a");
             if (apiUrl.includes("choosen_movies")) {
                 link.href = "more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم های سینمایی چینی";
+                link.textContent = "فیلم های چینی";
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 link.href = "more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
                 link.textContent = " فیلم های سینمایی کره ای";
@@ -404,7 +404,7 @@ const fetchNavbar3 = async (apiUrlsmovies) => {
             const link = document.createElement("a");
             if (apiUrl.includes("choosen_movies")) {
                 link.href = "more/index.html?type=choosen_movies&series=" + data.results.map(item => item.id).join(",");
-                link.textContent = "فیلم های سینمایی چینی";
+                link.textContent = "فیلم های چینی";
             } else if (apiUrl.includes("choosen_korean_movies")) {
                 link.href = "more/index.html?type=choosen_korean_movies&series=" + data.results.map(item => item.id).join(",");
                 link.textContent = "فیلم های سینمایی کره ای";
@@ -464,7 +464,7 @@ const fetchMore = async (apiUrls) => {
                 addDataToHTMLMore(data.results, document.getElementById("headerSec5"), "فیلم های کره ای:", "choosen_korean_movies");
             }
              else if (apiUrl.includes("choosen_movies")) {
-                addDataToHTMLMore(data.results, document.getElementById("headerSec6"), "فیلم سینمایی چینی :", "choosen_movies");
+                addDataToHTMLMore(data.results, document.getElementById("headerSec6"), "فیلم های چینی :", "choosen_movies");
             } 
         });
 
